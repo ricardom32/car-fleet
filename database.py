@@ -15,9 +15,12 @@ def car_inf_db():
       car_inf_dicts.append(result_all[row]._mapping)
     return car_inf_dicts
 
+
 def cars_inf_db(id):
-  with engine.connect() as conn:
-    result = conn.execute(text("SELECT * FROM car_inf WHERE id")
+ with engine.connect() as conn:
+    result = conn.execute(text("SELECT * FROM car_inf"))
     result_all = result.all()
-    car_inf_dicts = result_all[id]._mapping
+    id_int = int(id)
+    id_int = id_int -1
+    car_inf_dicts = result_all[int(id_int)]
     return car_inf_dicts
