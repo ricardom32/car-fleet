@@ -1,5 +1,5 @@
-from flask import Flask, render_template, jsonify
-from database import car_inf_db, cars_inf_db
+from flask import Flask, render_template, jsonify, request
+from database import car_inf_db, cars_inf_db, add_car_reg_db
 
 app = Flask(__name__)
 
@@ -18,9 +18,12 @@ def dashboard(id):
   dashboard = cars_inf_db(id)
   return render_template('dashboard.html',dashboard=dashboard)
 
-@app.route('/login')
-def login():
-  return render_template('login.html')
+@app.route("/car_inf/<id>/apply", methods=["post"])
+def apply_to_car(id):
+  data = request.form
+  add_car_reg_db(data)
+  return render_template('car_reg_submit.html',car_reg=data)
+  #return jsonify(data)
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)
