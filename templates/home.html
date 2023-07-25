@@ -26,17 +26,18 @@
       }
     </style>
   <body>
- 
-    {% include 'header.html' %}
+    
     <div id ='container'>
+      {% include 'header.html' %}
       <h1>{{company_name}} - Manage your fleet easly.</h1>
       {% include 'banner.html' %}
       <h2>Found the best place to Manage your fleet</h2>
       {% include 'bodytext.html' %}
-      {% for car_inf in car_inf %}
-      {% include 'car_information.html' %}
-      {% endfor %}
-      
+      <div>
+        {% for car_inf in car_inf %}
+          {% include 'car_information.html' %}
+        {% endfor %}
+      </div>
       {% include 'footer.html' %}
     </div>
   </body>

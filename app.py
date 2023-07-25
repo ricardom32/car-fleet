@@ -23,7 +23,28 @@ def apply_to_car(id):
   data = request.form
   add_car_reg_db(data)
   return render_template('car_reg_submit.html',car_reg=data)
-  #return jsonify(data)
+
+@app.route('/login.html')
+def login():
+  return render_template('/login.html')
+
+@app.route('/login/apply', methods=["post"])
+def loginaccount():
+  data = request.form
+  return jsonify(data)
+  #return render_template('/useraccount.html')
+
+@app.route('/signup.html')
+def signup():
+  return render_template('/signup.html')
+
+@app.route('/signup/apply')
+def signupaccount():
+  return render_template('/useraccount.html')
+
+@app.route('/index.html')
+def meubar():
+  return render_template('/index.html')
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)

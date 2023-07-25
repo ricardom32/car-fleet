@@ -1,27 +1,45 @@
-<!-- Store this code in 'login.html' file inside the 'templates' folder -->
-
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title> Login </title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">		
-	</head>
-	<body></br></br></br></br></br>
-		<div align="center">
-		<div align="center" class="border">
-			<div class="header">
-				<h1 class="word">Login</h1>
-			</div></br></br></br>
-			<h2 class="word">
-				<form action="{{ url_for('login') }}" method="post">
-				<div class="msg">{{ msg }}</div>
-					<input id="username" name="username" type="text" placeholder="Enter Your Username" class="textbox"/></br></br>
-					<input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br></br>
-					<input type="submit" class="btn" value="Sign In"></br></br>
-				</form>
-			</h2>
-			<p class="bottom">Don't have an account? <a class="bottom" href="{{url_for('register')}}"> Sign Up here</a></p>
-		</div>
-		</div>
-	</body>
-</html>
+  <head>
+    <title>Login</title>
+    <style>
+      h4 {
+          font-size: 32px;
+          font-family: Roboto;
+          font-weight: normal;
+          color: rgb(80, 80, 80);
+          text-align: center; 
+          margin: 35% auto 0 auto;
+      }
+      h2 {
+          font-size: 18px;
+          font-family: Roboto;
+          font-weight: normal;
+          color: rgb(80, 80, 80);
+          text-align: center;
+          margin: 2% auto 0 auto;
+      }
+      #container{
+        max-width: 720px;
+        margin: 0 auto 0 auto;
+      }
+    </style>
+  <body>
+    <form action="/login/apply" method="post">
+    <div id='container'>
+      <h4> Login</h4><br>
+      <h2>
+        <lable><b>User Name:</b</lable>
+        <input type='text' name="username", placeholder="username"><br>
+      </h2>
+      <h2>
+        <label> <b> Password: </b></label>
+        <input type="password" id="password" name="password", placeholder="password"><br>
+       </h2>
+       <h2>
+        <input type="submit">
+       </h2>
+    </div>
+  </form>
+  </body>
+</html> 
