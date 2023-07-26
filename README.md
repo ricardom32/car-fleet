@@ -4,6 +4,6 @@ Manage your car fleet
 
 Database access:
 database: carfleet
-username: 776egwehbs5y0uv4s1pq
+username: fxos315e0lako6zmdubw
 host: aws.connect.psdb.cloud
-password: pscale_pw_8Xj6aeQjmW0QsFiBUfx6TB173n1OC3Ga2sUCUUxqdwb
+password: pscale_pw_Cd8ztIWqUzwRE996qzvZC4OyWRwpoK7EOHGK8TifJjn

@@ -1,5 +1,6 @@
 { pkgs }: {
   deps = [
+    pkgs.mailutils
     pkgs.imagemagick6_light
     pkgs.python310Full
     pkgs.replitPackages.prybar-python310

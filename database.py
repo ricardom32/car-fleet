@@ -28,3 +28,11 @@ def add_car_reg_db(data):
   with engine.connect() as conn:
    query = text("INSERT INTO applications (maker, made, year, comments) VALUES (:maker, :made, :year, :comments)")
    conn.execute(query, data)
+
+def login_check(username, password):
+  # Check if account exists using MySQL
+  with engine.connect() as conn:
+    conn.execute('SELECT * FROM account WHERE username = %s AND password = %s', (username, password,))
+        # Fetch one record and return result
+  #account = account.fetchone()
+  return username

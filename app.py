@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from database import car_inf_db, cars_inf_db, add_car_reg_db
+from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check
 
 app = Flask(__name__)
 
@@ -28,11 +28,16 @@ def apply_to_car(id):
 def login():
   return render_template('/login.html')
 
-@app.route('/login/apply', methods=["post"])
-def loginaccount():
-  data = request.form
-  return jsonify(data)
-  #return render_template('/useraccount.html')
+@app.route('/login/apply', methods=['GET', 'POST'])
+def login_a():
+    # Output a message if something goes wrong...
+    msg = 'Output a message if something goes wrong...'
+    # Check if "username" and "password" POST requests exist (user submitted form)
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+        # Create variables for easy access
+        username = request.form['username']
+        password = request.form['password']
+    return jsonify(password)
 
 @app.route('/signup.html')
 def signup():
