@@ -1,4 +1,24 @@
 [[package]]
+name = "apesmit-python2"
+version = "0.1"
+description = "simple Python module to create XML sitemaps"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "beautifulsoup4"
+version = "4.4.1"
+description = "Screen-scraping library"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+html5lib = ["html5lib"]
+lxml = ["lxml"]
+
+[[package]]
 name = "blinker"
 version = "1.6.2"
 description = "Fast, simple object-to-object and broadcast signaling"
@@ -53,16 +73,32 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
-name = "flask-mysqldb"
-version = "1.0.1"
-description = "MySQLdb extension for Flask"
+name = "flask-sqlalchemy"
+version = "3.0.5"
+description = "Add SQLAlchemy support to your Flask application."
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7"
 
 [package.dependencies]
-Flask = ">=0.12.4"
-mysqlclient = ">=1.3.7"
+flask = ">=2.2.5"
+sqlalchemy = ">=1.4.18"
+
+[[package]]
+name = "flask-wtf"
+version = "1.1.1"
+description = "Form rendering, validation, and CSRF protection for Flask with WTForms."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+Flask = "*"
+itsdangerous = "*"
+WTForms = "*"
+
+[package.extras]
+email = ["email-validator"]
 
 [[package]]
 name = "greenlet"
@@ -75,6 +111,28 @@ python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
 [package.extras]
 docs = ["sphinx", "docutils (<0.18)"]
 test = ["objgraph", "psutil"]
+
+[[package]]
+name = "html5lib"
+version = "1.0b8"
+description = "HTML parser based on the WHATWG HTML specification"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+six = "*"
+
+[[package]]
+name = "html5lib-truncation"
+version = "0.1.0"
+description = "Truncating HTML with html5lib filter"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+html5lib = "*"
 
 [[package]]
 name = "itsdangerous"
@@ -107,12 +165,43 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
-name = "mysqlclient"
-version = "2.2.0"
-description = "Python interface to MySQL"
+name = "python-slugify"
+version = "8.0.1"
+description = "A Python slugify application that also handles Unicode"
 category = "main"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.7"
+
+[package.dependencies]
+text-unidecode = ">=1.3"
+
+[package.extras]
+unidecode = ["Unidecode (>=1.1.1)"]
+
+[[package]]
+name = "redberry"
+version = "0.0.7.15"
+description = "Flask Blueprint for adding simple CMS functionality"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+apesmit-python2 = "0.1"
+beautifulsoup4 = "4.4.1"
+flask = ">=0.11.1"
+flask-wtf = ">=0.13.1"
+html5lib = "1.0b8"
+html5lib-truncation = "0.1.0"
+python-slugify = ">=1.2.1"
+
+[[package]]
+name = "six"
+version = "1.16.0"
+description = "Python 2 and 3 compatibility utilities"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
 name = "sqlalchemy"
@@ -151,6 +240,14 @@ pymysql = ["pymysql"]
 sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
+name = "text-unidecode"
+version = "1.3"
+description = "The most basic Text::Unidecode port"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "typing-extensions"
 version = "4.7.1"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -172,23 +269,46 @@ MarkupSafe = ">=2.1.1"
 [package.extras]
 watchdog = ["watchdog (>=2.3)"]
 
+[[package]]
+name = "wtforms"
+version = "3.0.1"
+description = "Form validation and rendering for Python web development."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+MarkupSafe = "*"
+
+[package.extras]
+email = ["email-validator"]
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "4b2df53b1e29b8877e2e84ee49b847957ae7d3671ad53cea3a37f006bbd16f9a"
+content-hash = "0f5ded6f0c2ce3915db4c31e25102cf5afd4c7a29fb8ac1c172b66faa0780612"
 
 [metadata.files]
+apesmit-python2 = []
+beautifulsoup4 = []
 blinker = []
 click = []
 colorama = []
 django-redirect = []
 flask = []
-flask-mysqldb = []
+flask-sqlalchemy = []
+flask-wtf = []
 greenlet = []
+html5lib = []
+html5lib-truncation = []
 itsdangerous = []
 jinja2 = []
 markupsafe = []
-mysqlclient = []
+python-slugify = []
+redberry = []
+six = []
 sqlalchemy = []
+text-unidecode = []
 typing-extensions = []
 werkzeug = []
+wtforms = []

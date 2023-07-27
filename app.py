@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check
+from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser
 
 app = Flask(__name__)
 
@@ -29,27 +29,26 @@ def login():
   return render_template('/login.html')
 
 @app.route('/login/apply', methods=['GET', 'POST'])
-def login_a():
-    # Output a message if something goes wrong...
-    msg = 'Output a message if something goes wrong...'
-    # Check if "username" and "password" POST requests exist (user submitted form)
+def login_account():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        # Create variables for easy access
         username = request.form['username']
         password = request.form['password']
-    return jsonify(password)
+        login_check = login_check1(username, password)
+    if login_check == 'uerloged':
+      return render_template('/index.html')
+    else:
+      return 'eroor505'
 
 @app.route('/signup.html')
 def signup():
   return render_template('/signup.html')
 
-@app.route('/signup/apply')
+@app.route('/signup/apply',methods=['GET', 'POST'])
 def signupaccount():
-  return render_template('/useraccount.html')
-
-@app.route('/index.html')
-def meubar():
-  return render_template('/index.html')
+  data = request.form
+  #return jsonify(data)
+  signupuser(data) 
+  return render_template('useraccount.html')
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)

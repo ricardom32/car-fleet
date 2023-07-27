@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, text
 import os
 
+
 my_secret = os.environ['DB_CARFLEET']
 
 engine =create_engine(my_secret,connect_args={"ssl": {"ssl_ca": "/etc/ssl/cert.pem"}})
@@ -29,10 +30,39 @@ def add_car_reg_db(data):
    query = text("INSERT INTO applications (maker, made, year, comments) VALUES (:maker, :made, :year, :comments)")
    conn.execute(query, data)
 
-def login_check(username, password):
-  # Check if account exists using MySQL
+def login_check1(username, password):
   with engine.connect() as conn:
-    conn.execute('SELECT * FROM account WHERE username = %s AND password = %s', (username, password,))
-        # Fetch one record and return result
-  #account = account.fetchone()
-  return username
+    result = conn.execute(text("SELECT * FROM accounts WHERE username = :username"), dict(username=username))
+    for row in result.mappings():
+      if password == row['password']:
+        return 'uerloged'
+      else:
+        return 'userfailed'
+
+data = {
+  "username": 'tes1',
+  "password": 'newpass',
+  "email": 'maga@hotmail.com'
+ }
+
+def signupuser(data):
+  with engine.connect() as conn:
+    query = text("INSERT INTO accounts (username, password, email) VALUES (:username, :password, :email)")
+    conn.execute(query, data)
+  return
+
+#signupuser(data)
+
+
+with engine.connect() as conn:
+  result = conn.execute(text("SELECT * FROM accounts"))
+  result_all = result.all()
+  id_int = int(1)
+  id_int = id_int -1
+  car_inf_dicts = result_all[int(id_int)]
+  print(result_all)
+
+
+
+    
+
