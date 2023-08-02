@@ -1,6 +1,6 @@
 <p4> Car Registraction</p4>
 <form action="/car_inf/{{dashboard['id']}}/apply" method="post">
-
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <div class="mb-2">
       <lable>Car Maker:</lable><br>
       <p>Car_Id: {{dashboard['id']}}</p>

@@ -2,8 +2,9 @@
 <html>
   <head>
     <title>Login</title>
+    <!--<link rel="stylesheet" href="https://car-fleet.ricardom32.repl.co/static/style.css"-->
     <style>
-      h4 {
+    h4 {
           font-size: 32px;
           font-family: Roboto;
           font-weight: normal;
@@ -26,7 +27,8 @@
     </style>
   <body>
     <form action="/login/apply" method="post">
-    <div id='container'>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <div id='container'>
       <h4> Login</h4><br>
       <h2>
         <lable><b>User Name:</b</lable>

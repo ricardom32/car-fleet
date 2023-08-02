@@ -1,37 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>Car Fleet</title>
-    {% include 'bootstrap.html' %}
+    <!--Link with CSS style information -->
+    <link rel="stylesheet" href="https://car-fleet.ricardom32.repl.co/static/style.css"
+  
+   <!--{% include 'bootstrap.html' %} -->
+   
     <style>
-      h1{
-        font-size: 40px;
-        font-family: Roboto;
-        font-weight: normal;
-        color: rgb(80, 80, 80);
-        text-align: center;
-        margin-top: 80px;
-      }
-      h2 {
-          font-size: 32px;
-          font-family: Roboto;
-          font-weight: normal;
-          color: rgb(80, 80, 80);
-          text-align: center; 
-          margin-top:35px;
-      }
-      #container{
-        max-width: 720px;
-        margin: 0 auto 0 auto;
-      }
     </style>
   <body>
-    
     <div id ='container'>
       {% include 'header.html' %}
       <h1>{{company_name}} - Manage your fleet easly.</h1>
       {% include 'banner.html' %}
-      <h2>Found the best place to Manage your fleet</h2>
+      <p class="newselector">Found the best place to Manage your fleet</p>
       {% include 'bodytext.html' %}
       <div>
         {% for car_inf in car_inf %}
