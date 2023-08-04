@@ -18,9 +18,6 @@ csrf = CSRFProtect(app)
 login_manager_app = LoginManager(app)
 app.config['SECRET_KEY'] = 'thisisasecretkeyforcarfleet'
 
-#user_by_id = User(2, 'ricardom32', 'Rgtmri930#1', 'ricardom32@hotmail.com')
-#user_by_id = User(1, 'ricardo', 'Rgtmri930#1', 'ricardom32@hotmail.com')
-
 #itentify the user
 @login_manager_app.user_loader
 def load_user(id):
@@ -93,6 +90,14 @@ def signupaccount():
   #print(data)
   signupuser(data) 
   return 'Usuario Registrado'
+
+@app.route('/login1')
+def login1():
+  return render_template('/login1.html')
+
+@app.route('/forms/learn_html_css')
+def res_view():
+  return render_template('/forms/learn_html_css.html')
 
 if __name__ == "__main__":
   csrf.init_app(app)

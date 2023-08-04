@@ -2,3 +2,6 @@ Flask
 gunicorn
 sqlalchemy
 pymysql
+flask-login
+werkzeug
+flask_sqlalchemy
