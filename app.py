@@ -1,17 +1,11 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id
-from flask_sqlalchemy import SQLAlchemy
-
-from werkzeug.datastructures import ImmutableMultiDict
 
 # project the access the database with Token
 from flask_wtf.csrf import CSRFProtect
 
 # login
 from flask_login import LoginManager, login_user, logout_user, login_required
-
-#Import class User to identify the longin
-from User import User
 
 app = Flask(__name__)
 csrf = CSRFProtect(app)
@@ -22,7 +16,6 @@ app.config['SECRET_KEY'] = 'thisisasecretkeyforcarfleet'
 @login_manager_app.user_loader
 def load_user(id):
   return get_user_by_id(id)
-  #return user_by_id
 
 @app.route("/")
 def Car_easy_fleet():
@@ -57,25 +50,19 @@ def login_account():
       login_check = login_check1(username,password)
       if login_check != None:
         login_user(login_check)
-        return render_template('/vertbarcode.html')
+        return render_template('/sidebar.html')
       else:
         return 'Error 505'
-        
-#      if login_check == 'user_loggedin':
-#        login_user(user_by_id)
-#        return render_template('/vertbarcode.html')
-#      else:
-#        return 'Error 505'
 
 @app.route('/protected.html')
 @login_required
 def protected():
   return "<h1>Esta pagina esta protegida, solo usuario autorizaod puedes accessar."
 
-@app.route('/logout.html')
+@app.route('/logout')
 def logout():
   logout_user()
-  return "<h1>Logout done. </h1>"
+  return render_template('home.html')
 
 @app.route('/signup.html')
 def signup():
@@ -84,20 +71,20 @@ def signup():
 @app.route('/signup/apply',methods=['GET', 'POST'])
 def signupaccount():
   data = request.form
-  #password = request.form['password']
-  #email = request.form['email']
-  #data = [username, password, email]
-  #print(data)
   signupuser(data) 
   return 'Usuario Registrado'
 
-@app.route('/login1')
-def login1():
-  return render_template('/login1.html')
+@app.route('/sidebar')
+def sidebar():
+  return render_template('/sidebar.html')
 
-@app.route('/forms/learn_html_css')
-def res_view():
-  return render_template('/forms/learn_html_css.html')
+@app.route('/useraccount')
+def teste():
+  return render_template('/useraccount.html')
+
+@app.route('/customer_reg')
+def customer_reg():
+  return render_template('/customer_reg.html')
 
 if __name__ == "__main__":
   csrf.init_app(app)
