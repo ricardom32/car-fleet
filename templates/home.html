@@ -4,11 +4,15 @@
     <meta charset="utf-8">
     <title>Car Fleet</title>
     <!--Link with CSS style information -->
-    <link rel="stylesheet" href="https://car-fleet.ricardom32.repl.co/static/style.css"
-  
+    <link rel="stylesheet" href="https://car-fleet.ricardom32.repl.co/static/style.css"  
    <!--{% include 'bootstrap.html' %} -->
-   
+
     <style>
+      table, th, td {
+  border:1px solid black;
+  border-collapse: collapse;
+}
+</style>
     </style>
   <body>
     <div id ='container'>
@@ -18,9 +22,21 @@
       <p class="newselector">Found the best place to Manage your fleet</p>
       {% include 'bodytext.html' %}
       <div>
-        {% for car_inf in car_inf %}
-          {% include 'car_information.html' %}
-        {% endfor %}
+
+      <table>
+        <tr>
+          <th style="width:20%">Firs Name</th>
+          <th style="width:20%">Last Name</th>
+          <th style="width:20%">Mobile</th>
+          <th style="width:20%">email</th>
+        </tr>
+        <tr>
+          {% for car_inf in car_inf %}
+            <td>{% include 'car_information.html' %}</td>
+          {% endfor %}
+        </tr>
+      </table>
+
       </div>
       {% include 'footer.html' %}
     </div>

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for
-from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id
+from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id, db_new_account
 
 # project the access the database with Token
 from flask_wtf.csrf import CSRFProtect
@@ -74,17 +74,57 @@ def signupaccount():
   signupuser(data) 
   return 'Usuario Registrado'
 
-@app.route('/sidebar')
-def sidebar():
-  return render_template('/sidebar.html')
+@app.route('/forms/customer_new')
+def new_account():
+  return render_template('/forms/customer/customer_form_new.html')
 
-@app.route('/useraccount')
-def teste():
-  return render_template('/useraccount.html')
+@app.route('/forms/new_account/apply',methods=['GET', 'POST'])
+def customer_account():
+  data = request.form
+  db_new_account(data) 
+  return 'Usuario Registrado'
 
-@app.route('/customer_reg')
-def customer_reg():
-  return render_template('/customer_reg.html')
+@app.route('/forms/customer_search')
+def customer_search():
+  return render_template('/forms/customer/customer_form_search.html')
+
+@app.route('/forms/customer_view')
+def customer_inf():
+  return render_template('/forms/customer/customer_form_view.html')
+
+"""
+@app.route('/forms/dashboard')
+def dashboard1():
+  return render_template('/forms/dashboard.html')
+
+@app.route('/forms/car_form')
+def revenue():
+  return render_template('/guidances/form_template.html')
+
+@app.route('/forms/customer_forms')
+def customer():
+  return render_template('/guidances/form_template.html')
+
+@app.route('/forms/maintenance_form')
+def maintenance():
+  return render_template('/forms/maintenance_form.html')
+  
+@app.route('/forms/car_form')
+def car():
+ return render_template('/forms/car_form.html')
+
+@app.route('/forms/employee_form')
+def employee():
+  return render_template('crossbar_test.html')
+
+@app.route('/homes')
+def news():
+  return render_template('/forms/employee_form.html')
+
+@app.route('/news')
+def contact():
+  return render_template('/forms/revenue.html')
+"""
 
 if __name__ == "__main__":
   csrf.init_app(app)

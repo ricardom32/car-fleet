@@ -47,6 +47,14 @@ def add_car_reg_db(data):
    query = text("INSERT INTO applications (maker, made, year, comments) VALUES (:maker, :made, :year, :comments)")
    conn.execute(query, data)
 
+#data = {
+#  "maker": "Ford",
+#  "made": "Mustang",
+#  "year": 1964,
+#  "comments": "Teste of database",
+#}
+#add_car_reg_db(data)
+
 # Check the Login
 def login_check1(username, password):
   with engine.connect() as conn:
@@ -80,9 +88,34 @@ def signupuser(data):
   password = generate_password_hash(password)
   email = data['email']
   user_add = {"username": username, "password": password, "email": email}
-  print(type(user_add))
-  print(user_add)
   with engine.connect() as conn:
     query = text("INSERT INTO accounts (username, password, email) VALUES (:username, :password, :email)")
     conn.execute(query, user_add)
   return
+
+
+# New customer account.
+def db_new_account(data):
+  with engine.connect() as conn:
+   query = text("INSERT INTO customer_account (first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number,dl_country, address, complements, city, state,coutry, zipcode) VALUES (:first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :address, :complements, :city, :state, :coutry, :zipcode)")
+   conn.execute(query, data)
+
+data1 = {
+  "first_name": "Ford",
+  "last_name": "Mustang",
+  "date_birth": "2023-08-20",
+  "email": "ricardom32@hotmail.com",
+  "mobile": 1234567,
+  "gender": "Femele",
+  "occupation": "Engineer",
+  "dl_number": "12345655",
+  "dl_country": "United States",
+  "dl_expiry_date": "2023-08-20",
+  "address": "1358 Las Juntas Way Apt G",
+  "complements": "G",
+  "city": "Walnut Creek",
+  "state": "California",
+  "coutry": "Brazil",
+  "zipcode": "94597",
+}
+#db_new_account(data)
