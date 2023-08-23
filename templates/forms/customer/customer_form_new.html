@@ -4,7 +4,6 @@
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      
       <!----======== CSS ======== -->
       <link rel="stylesheet" href="style.css">
        
@@ -17,7 +16,7 @@
     /* ===== Google Font Import - Poppins ===== */
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
   
-   *{
+  *{
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -34,9 +33,10 @@
   .container{
       position: relative;
       max-width: 900px;
+      min-height: 500px;
       width: 100%;
       border-radius: 6px;
-      padding: 30px;
+      padding: 10px 20px 20px 20px;
       margin: 0 15px;
       background-color: #fff;
       box-shadow: 0 5px 10px rgba(0,0,0,0.1);
@@ -49,34 +49,7 @@
       font-weight: 600;
       color: #333;
   }
-  .container form{
-      position: relative;
-      margin-top: 16px;
-      min-height: 500px;
-      background-color: #fff;
-      overflow: hidden;
-  }
-  .container form .form{
-      position: absolute;
-      background-color: #fff;
-      transition: 0.3s ease;
-  }
-  .container form .form.second{
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(100%);
-  }
-  form.secActive .form.second{
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(0);
-  }
-  form.secActive .form.first{
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(-100%);
-  }
-  .container form .title{
+  .title{
       display: block;
       margin-bottom: 8px;
       font-size: 16px;
@@ -84,13 +57,28 @@
       margin: 6px 0;
       color: #333;
   }
-  .container form .fields{
+
+ .fields{
       display: flex;
       align-items: center;
       justify-content: flex-start;
       flex-wrap: wrap;
   }
-  form .fields .input-field{
+
+.button_1 input{
+  background-color: #008CBA; /* Blue */
+  padding: 8px 32px;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 18px;
+  margin: 6px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Field with 3 coloun */
+.input-field{
       display: flex;
       width: calc(100% / 3 - 15px);
       flex-direction: column;
@@ -101,7 +89,9 @@
       font-weight: 500;
       color: #2e2e2e;
   }
-  form .fields .input-field1{
+
+   /* Field with 1 coloun */ 
+ .input-field1{
       display: flex;
       width: calc(100% / 1 - 15px);
       flex-direction: column;
@@ -112,34 +102,32 @@
       font-weight: 500;
       color: #2e2e2e;
   }
-  /* --------------- Search Field Configuration ----------*/
-  form .fields .input-filed_search_select{
+  /* Search Field Configuration ----------*/
+.input-filed_search_select{
       display: flex;
       width: calc(100% / 5 - 15px);
       flex-direction: column;
       margin: 4px 7px;
   }
-  form .fields .input-field_search{
+.input-field_search{
       display: flex;
-      width: calc(100% / 1.6 - 15px);
-      height: 200px;
-      border-style: solid;
-      padding: 20px 20px;
+      width: calc(100% / 1.9 - 15px);
       flex-direction: column;
       margin: 4px 7px;
   }
-  form .fields .input-field_search_button{
+#input-field_search_button{
       display: flex;
       width: calc(100% / 8 - 15px);
-       height: 200px;
-      border-style: solid;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
       flex-direction: column;
       margin: 4px 7px;
   }
   
   /* -------------------------------------------------------------*/
   
-  .input-field1 input, select{
+.input-field1 input, select{
       outline: none;
       font-size: 14px;
       font-weight: 400;
@@ -147,10 +135,10 @@
       border-radius: 5px;
       border: 1px solid #aaa;
       padding: 0 15px;
-      height: 42px;
+      height: 30px;
       margin: 8px 0;
   }
-  .input-field input, select{
+.input-field input, select{
       outline: none;
       font-size: 14px;
       font-weight: 400;
@@ -158,76 +146,35 @@
       border-radius: 5px;
       border: 1px solid #aaa;
       padding: 0 15px;
-      height: 42px;
+      height: 30px;
       margin: 8px 0;
   }
-  
-  .input-field input :focus,
-  .input-field select:focus{
-      box-shadow: 0 3px 6px rgba(0,0,0,0.13);
-  }
-  .input-field select,
-  .input-field input[type="date"]{
-      color: #707070;
-  }
-  .input-field input[type="date"]:valid{
-      color: #333;
-  }
-    
-  .container form button, .backBtn{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 45px;
-      max-width: 200px;
-      width: 100%;
-      border: none;
+.input-field_search input, select{
       outline: none;
-      color: #fff;
-      border-radius: 5px;
-      margin: 25px 0;
-      background-color: #4070f4;
-      transition: all 0.3s linear;
-      cursor: pointer;
-  }
-  .container form .btnText{
       font-size: 14px;
       font-weight: 400;
+      color: #333;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      padding: 0 15px;
+      height: 40px;
+      margin: 8px 0;
   }
-  form button:hover{
-      background-color: #265df2;
-  }
-  form button i,
-  form .backBtn i{
-      margin: 0 6px;
-  }
-  form .backBtn i{
-      transform: rotate(180deg);
-  }
-  form .buttons{
-      margin-top: 120px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-  }
-  form .buttons button, .backBtn{
-      margin-right: 14px;
-  }
-  
+
+  /* Mobile layout */
   @media (max-width: 750px) {
-      .container form{
+      .container{
           overflow-y: scroll;
       }
-      .container form::-webkit-scrollbar{
+      .container::-webkit-scrollbar{
          display: none;
       }
-      form .fields .input-field{
+     .fields .input-field {
           width: calc(100% / 2 - 15px);
       }
   }
-  
   @media (max-width: 550px) {
-      form .fields .input-field{
+    .fields .input-field{
           width: 100%;
       }
   }
@@ -268,7 +215,7 @@
   /* Style the tab content */
   .tabcontent {
     display: none;
-    padding: 6px 10px;
+    padding: 5px 10px;
     border: 1px solid #ccc;
     border-top: none;
   }
@@ -288,207 +235,396 @@
       margin: 0px;
       height: 5px;
     }
-    
     .table tr:nth-child(even) {
       background-color: #dddddd;
     }
-    
+    .table tr:not(:first-child):hover {
+      background-color: gray;
+      cursor: pointer;
+    }
+    td a { 
+      display: block; 
+      border: 0px solid black;
+      padding: 0px; 
+      color: black;
+      text-decoration-line: none;
+    }
   </style>
   
   <body>
     {% include 'sidebar.html' %}
-  
     <div class="container">
       <header>Customer Account</header>
       <div class="tab">
-        <button class="tablinks" onclick="openCity(event, 'new_account')" id="defaultOpen">New Account</button>
-        <button class="tablinks" onclick="openCity(event, 'customer_account')">Search </button>
-        <button class="tablinks" onclick="openCity(event, 'Tokyo')">Account</button>
+        {% if tab_id == "2": %}
+           <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button>
+           <button class="tablinks" onclick="openCity(event, 'search')"id="defaultOpen">Search </button>
+           <button class="tablinks" onclick="openCity(event, 'account')">Account</button>
+          {% elif tab_id == "3" or tab_id == "4": %}
+           <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button>
+           <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
+           <button class="tablinks" onclick="openCity(event, 'account')"id="defaultOpen">Account</button>
+        {% else %}
+          <button class="tablinks" onclick="openCity(event, 'new_account')" id="defaultOpen">New Account</button>
+          <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
+          <button class="tablinks" onclick="openCity(event, 'account')">Account</button>
+        {% endif %}
+      </div>
+
+      <div id="account" class="tabcontent">
+          <p>Account Information: {{tab_id}}</p>
+          {% if tab_id == "2" or tab_id == "1" : %}
+              <h2> No Customer Account</h2>
+          {% elif tab_id == "3" %}          
+          <div class="details personal">
+              <span class="title">Personal Details</span>
+              <div class="fields">
+                <div class="input-field">
+                  <label>First Name</label>
+                  {{searched_account['first_name']}}
+                </div>
+                <div class="input-field">
+                  <label>Last Name</label>
+                  {{searched_account['last_name'] }}
+                </div>
+                <div class="input-field">
+                    <label>Date of Birth</label>
+                    {{searched_account['date_birth'] }}
+                </div>
+                <div class="input-field">
+                    <label>Email</label>
+                    {{searched_account['email'] }}
+                </div>
+                <div class="input-field">
+                    <label>Mobile Number</label>
+                    {{searched_account['mobile'] }}
+                </div>    
+               <div class="input-field">
+                    <label>Gender</label>
+                    {{searched_account['gender'] }}
+                </div>
+                <div class="input-field">
+                    <label>Occupation</label>
+                    {{searched_account['occupation'] }}
+                </div>
+              </div>
+            </div>
+            <div class="details ID">
+              <span class="title">Driver's License</span>
+              <div class="fields">
+                  <div class="input-field">
+                      <label>ID Number</label>
+                      {{searched_account['dl_number'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>Issued Country</label>
+                      {{searched_account['dl_country'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>Expiry Date</label>
+                      {{searched_account['dl_expired'] }}
+                  </div>
+              </div>
+            </div>
+            <div class="details address">
+              <span class="title">Address Account</span>
+              <div class="fields">
+                  <div class="input-field1">
+                      <label>Address</label>
+                      {{searched_account['address'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>Complements</label>
+                      {{searched_account['complements'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>City</label>
+                      {{searched_account['city'] }}  
+                  </div>
+                  <div class="input-field">
+                      <label>State</label>
+                      {{searched_account['state'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>Coutry</label>
+                      {{searched_account['coutry'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>Zip Code</label>
+                     {{searched_account['zipcode'] }}
+                   </div>
+                </div>
+              <form action="/forms/new_account/edit">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                  <div class="button_1">
+                     <input type="submit" value="Edit">
+                   </div>
+              </form>
+            
+          </div>
+        {% elif tab_id == "4" %}          
+          <div class="details personal">
+            <form action="/forms/new_account/updated" method="post">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <input type="hidden" name="user_id" value="{{user_edit['user_id']}}"/>
+              <span class="title">Personal Details</span>
+              <div class="fields">
+                <div class="input-field">
+                  <label>First Name</label>
+                  <input type="text" name="first_name" value="{{user_edit['first_name']}}">
+                </div>
+                <div class="input-field">
+                  <label>Last Name</label>
+                  <input type="text" name="last_name" value="{{user_edit['last_name']}}">
+                </div>
+                <div class="input-field">
+                    <label>Date of Birth</label>
+                    <input type="text" name="date_birth" value="{{user_edit['date_birth']}}">
+                </div>
+                <div class="input-field">
+                    <label>Email</label>
+                    <input type="text" name="email" value="{{user_edit['email']}}">
+                </div>
+                <div class="input-field">
+                    <label>Mobile Number</label>
+                    <input type="text" name="mobile" value="{{user_edit['mobile']}}">
+                </div>    
+               <div class="input-field">
+                    <label>Gender</label>
+                    <input type="text" name="gender" value="{{user_edit['gender']}}">
+                </div>
+                <div class="input-field">
+                    <label>Occupation</label>
+                    <input type="text" name="occupation" value="{{user_edit['occupation']}}">
+                </div>
+              </div>
+            </div>
+            <div class="details ID">
+              <span class="title">Driver's License</span>
+              <div class="fields">
+                  <div class="input-field">
+                      <label>ID Number</label>
+                      <input type="text" name="dl_number" value="{{user_edit['dl_number']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>Issued Country</label>
+                      <input type="text" name="dl_country" value="{{user_edit['dl_country']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>Expiry Date</label>
+                      <input type="text" name="dl_expired" value="{{user_edit['dl_expired']}}">
+                  </div>
+              </div>
+            </div>
+            <div class="details address">
+              <span class="title">Address Account</span>
+              <div class="fields">
+                  <div class="input-field1">
+                      <label>Address</label>
+                      <input type="text" name="address" value="{{user_edit['address']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>Complements</label>
+                      <input type="text" name="complements" value="{{user_edit['complements']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>City</label>
+                      <input type="text" name="city" value="{{user_edit['city']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>State</label>
+                      <input type="text" name="state" value="{{user_edit['state']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>Coutry</label>
+                      <input type="text" name="coutry" value="{{user_edit['coutry']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>Zip Code</label>
+                       <input type="text" name="zipcode" value="{{user_edit['zipcode']}}">
+                   </div>
+                </div>
+              <div class="button_1">
+               <input type="submit" value="Update">
+             </div>
+            </form>
+          </div>
+         {% endif %}
       </div>
       
       <div id="new_account" class="tabcontent">
         <form action="/forms/new_account/apply" method="post">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-          <div class="form first">
-            <div class="details personal">
-              <span class="title">Personal Details</span>
-    
+          <div class="details personal">
+            <span class="title">Personal Details</span>
+  
+            <div class="fields">
+                <div class="input-field">
+                    <label>First Name</label>
+                    <input type="text" name="first_name" placeholder="Enter your name">
+                </div>
+
+                <div class="input-field">
+                  <label>Last Name</label>
+                  <input type="text" name="last_name" placeholder="Enter your name" >
+                </div>
+
+                <div class="input-field">
+                    <label>Date of Birth</label>
+                    <input type="date" name="date_birth" placeholder="Enter birth date" >
+                </div>
+
+                <div class="input-field">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="Enter your email" >
+                </div>
+
+                <div class="input-field">
+                    <label>Mobile Number</label>
+                    <input type='int' name="mobile" placeholder="Enter mobile number" >
+                </div>
+
+                <div class="input-field">
+                    <label>Gender</label>
+                    <select name="gender">
+                        <option disabled selected>Select gender</option>
+                        <option value="Male"> Male</option>
+                        <option value="Female"> Female</option>
+                        <option value="Others"> Others</option>
+                    </select>
+                   <input type="hidden">
+                </div>
+
+                <div class="input-field">
+                    <label>Occupation</label>
+                    <input type="text" name="occupation" placeholder="Enter your ccupation" required>
+                </div>
+            </div>
+          </div>
+          <div class="details ID">
+              <span class="title">Driver's License</span>
+
               <div class="fields">
                   <div class="input-field">
-                      <label>First Name</label>
-                      <input type="text" name="first_name" placeholder="Enter your name">
+                      <label>ID Number</label>
+                      <input type="text" name="dl_number" placeholder="Enter ID type" required>
                   </div>
-  
+                
                   <div class="input-field">
-                    <label>Last Name</label>
-                    <input type="text" name="last_name" placeholder="Enter your name" >
+                      <label>Issued Country</label>
+                      <input type="text" name="dl_country" placeholder="Enter issued authority" required>
                   </div>
-  
+
                   <div class="input-field">
-                      <label>Date of Birth</label>
-                      <input type="date" name="date_birth" placeholder="Enter birth date" >
+                      <label>Expiry Date</label>
+                      <input type="date" name="dl_expired" placeholder="Enter expiry date" required>
                   </div>
-  
                   <div class="input-field">
-                      <label>Email</label>
-                      <input type="text" name="email" placeholder="Enter your email" >
-                  </div>
-  
-                  <div class="input-field">
-                      <label>Mobile Number</label>
-                      <input type='int' name="mobile" placeholder="Enter mobile number" >
-                  </div>
-  
-                  <div class="input-field">
-                      <label>Gender</label>
-                      <select name="gender">
-                          <option disabled selected>Select gender</option>
-                          <option value="Male"> Male</option>
-                          <option value="Female"> Female</option>
-                          <option value="Others"> Others</option>
-                      </select>
-                     <input type="hidden">
-                  </div>
-  
-                  <div class="input-field">
-                      <label>Occupation</label>
-                      <input type="text" name="occupation" placeholder="Enter your ccupation" required>
-                  </div>
+                       <div id="target">You can drag an image file here</div>
+                      <label>Upload Driver's License</label><br>
+                  <input type="file" accept="image/*" />
+
               </div>
-            </div>
-  
-              <div class="details ID">
-                  <span class="title">Driver's License</span>
-  
-                  <div class="fields">
-                      <div class="input-field">
-                          <label>ID Number</label>
-                          <input type="text" name="dl_number" placeholder="Enter ID type" required>
-                      </div>
-                    
-                      <div class="input-field">
-                          <label>Issued Country</label>
-                          <input type="text" name="dl_country" placeholder="Enter issued authority" required>
-                      </div>
-  
-                      <div class="input-field">
-                          <label>Expiry Date</label>
-                          <input type="date" name="dl_expiry_date" placeholder="Enter expiry date" required>
-                      </div>
+              </div>
+          </div> 
+          <div class="details address">
+              <span class="title">Address Account</span>
+
+              <div class="fields">
+                  <div class="input-field1">
+                      <label>Address</label>
+                      <input type="text" name="address" placeholder="Address Account" required>
                   </div>
-  
-                  <button class="nextBtn">
-                      <span class="btnText">Next</span>
-                      <i class="uil uil-navigator"></i>
-                  </button>
-              </div> 
-          </div>
-  
-          <div class="form second">
-            <div class="details address">
-                <span class="title">Address Account</span>
-  
-                <div class="fields">
-                    <div class="input-field1">
-                        <label>Address</label>
-                        <input type="text" name="address" placeholder="Address Account" required>
-                    </div>
-  
-                    <div class="input-field">
-                        <label>Complements</label>
-                        <input type="text" name="complements" placeholder="Apartment, Suit, etc." required>
-                    </div>
-  
-                    <div class="input-field">
-                        <label>City</label>
-                        <input type="text"  name="city" placeholder="Enter nationality" required>
-                    </div>
-                  
-                    <div class="input-field">
-                        <label>State</label>
-                        <input type="text" name="state" placeholder="Enter nationality" required>
-                    </div>
-  
-                    <div class="input-field">
-                        <label>Coutry</label>
-                        <input type="text" name="coutry" placeholder="Enter your state" required>
-                    </div>
-  
-                    <div class="input-field">
-                        <label>Zip Code</label>
-                        <input type="text" name="zipcode" placeholder="Enter your district" required>
-                    </div>
-  
-                </div>
-                <div class="buttons">
-                  <div class="backBtn">
-                      <i class="uil uil-navigator"></i>
-                      <span class="btnText">Back</span>
+
+                  <div class="input-field">
+                      <label>Complements</label>
+                      <input type="text" name="complements" placeholder="Apartment, Suit, etc." required>
                   </div>
-                  
-                  <button class="sumbit">
-                      <!--  <span class="btnText">Submit</span> -->
-                      <input type="submit">
-                      <!-- <i class="uil uil-navigator"></i> -->
-                  </button>
-                </div>
-            </div>
+
+                  <div class="input-field">
+                      <label>City</label>
+                      <input type="text"  name="city" placeholder="Enter nationality" required>
+                  </div>
+                
+                  <div class="input-field">
+                      <label>State</label>
+                      <input type="text" name="state" placeholder="Enter nationality" required>
+                  </div>
+
+                  <div class="input-field">
+                      <label>Coutry</label>
+                      <input type="text" name="coutry" placeholder="Enter your state" required>
+                  </div>
+
+                  <div class="input-field">
+                      <label>Zip Code</label>
+                      <input type="text" name="zipcode" placeholder="Enter your district" required>
+                   </div>
+                 
+             </div>
+             <div class="button_1">
+               <input type="submit">
+             </div>
           </div>
         </form>
       </div>
       
-      <div id="customer_account" class="tabcontent">
+      <div id="search" class="tabcontent">
         <p>Seach for Customer Account:</p>
-        <form action="#">
+        <form action="/forms/customer_search/apply" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
           <div class="fields">
             <div class="input-filed_search_select">
-                <select name="search_type">
-                  <option disabled selected>Search Type</option>
+                <select name="search_type" id="search">
+                  <option disabled selected> Search Type</option>
                       <option value="first_name"> First Name</option>
                       <option value="last_name"> Last Name</option>
                       <option value="email"> email</option>
                       <option value="mobile"> Mobile</option>
-                      <option value="ld_number"> Driver's License</option>
+                      <option value="dl_number"> Driver's License</option>
                   </select>
             </div>
             <div class="input-field_search">
                   <input type="text" name="search" placeholder="Search...">
             </div>
-            <div class="input-field_search_button">
-                  <input  type="submit">
-             </div>
-            <div class="table">
-              <table>
-                <tr>
-                  <th style="width:2%">S</th>
-                  <th style="width:30%">Firs Name</th>
-                  <th style="width:30%">Last Name</th>
-                  <th style="width:20%">Mobile</th>
-                  <th style="width:30%">email</th>
-                </tr>
-                <div class="line1">
-                  {% for i in range(0, 4)%}                
-                    <tr>
-                      <td> <input type="radio" name="radio"> </td>
-                      <td>Ricardo</td>
-                      <td>Rafael</td>
-                      <td>Renato</td>
-                      <td>Basita&IO</td>
-                    </tr>                 
-                  {% endfor %}
-                </div>
-              </table>
+                
+                  <input id="input-field_search_button" type="submit" value="Search">
             </div>
-          </div>
         </form>
+        
+        {% if search_customer == "": %}
+          <h1> no Search</h1>
+        {% else %}
+        <div class="table">
+          <table>
+            <tr>
+              <th style="width:30%">Firs Name</th>
+              <th style="width:30%">Last Name</th>
+              <th style="width:20%">Mobile</th>
+              <th style="width:30%">email</th>
+              <th style="width:30%">Driver's License</th>
+            </tr>
+            <div class="line">
+            
+              {% for i in range(0, search_customer.__len__()) %}                
+                <tr>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <td> <a href="https://cars-fleet.ricardom32.repl.co/forms/account_detail/{{i}}">{{search_customer[i]['first_name'] }}</a></td>
+                    <td> <a href="https://cars-fleet.ricardom32.repl.co/forms/account_detail/{{i}}">{{search_customer[i]['last_name'] }}</a></td>
+                    <td> <a href="https://cars-fleet.ricardom32.repl.co/forms/account_detail/{{i}}">{{search_customer[i]['mobile'] }}</a></td>
+                    <td> <a href="https://cars-fleet.ricardom32.repl.co/forms/account_detail/{{i}}">{{search_customer[i]['email'] }} </a></td>
+                    <td> <a href="https://cars-fleet.ricardom32.repl.co/forms/account_detail/{{i}}">{{search_customer[i]['dl_number'] }}</a></td>
+                </tr>
+              {% endfor %}
+            </div>
+          </table>
+        {% endif %}
+        </div>
+
       </div>
-      
-      <div id="Tokyo" class="tabcontent">
-        <h1>teste1`</h1>
-      </div>
+     </div>
   
-  
-      <script>
+    <script>
         //Function to change the Tabs
         function openCity(evt, cityName) {
             var i, tabcontent, tablinks;
@@ -502,11 +638,18 @@
             }
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
+
         }
         // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
-      
-              
+
+
+      function myFunction() {
+         document.getElementById("demo").innerHTML = location.reload();
+      }
+
+       
+  /*            
       //Scrip for move second page of the form
         const form = document.querySelector("form"),
                 nextBtn = form.querySelector(".nextBtn"),
@@ -523,7 +666,8 @@
             })
         })
         backBtn.addEventListener("click", () => form.classList.remove('secActive'));
+    */
       </script>
-    </div>
+
   </body>
 </html>

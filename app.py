@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for
-from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id, db_new_account
+from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id, db_new_account, db_customer_search,detail_account,edit_user,db_customer_updated
+from werkzeug.datastructures import ImmutableMultiDict
 
 # project the access the database with Token
 from flask_wtf.csrf import CSRFProtect
@@ -34,8 +35,11 @@ def dashboard(id):
 
 @app.route("/car_inf/<id>/apply", methods=["post"])
 def apply_to_car(id):
+  #print("car_inf", id)
   data = request.form
   add_car_reg_db(data)
+  #print(data)
+  print(type(data))
   return render_template('car_reg_submit.html',car_reg=data)
 
 @app.route('/login.html')
@@ -76,7 +80,7 @@ def signupaccount():
 
 @app.route('/forms/customer_new')
 def new_account():
-  return render_template('/forms/customer/customer_form_new.html')
+  return render_template('/forms/customer/customer_form_new.html',tab_id="1")
 
 @app.route('/forms/new_account/apply',methods=['GET', 'POST'])
 def customer_account():
@@ -84,14 +88,32 @@ def customer_account():
   db_new_account(data) 
   return 'Usuario Registrado'
 
-@app.route('/forms/customer_search')
+@app.route('/forms/customer_search/apply',methods=['GET', 'POST'])
 def customer_search():
-  return render_template('/forms/customer/customer_form_search.html')
+  search_customer = request.form
+  print(len(search_customer))
+  if len(search_customer) <= 2:
+    return render_template('/forms/customer/customer_form_new.html',search_customer="",tab_id="2")
+  else:
+    search_customer=db_customer_search(search_customer)
+    return render_template('/forms/customer/customer_form_new.html',search_customer=search_customer,tab_id="2")
 
-@app.route('/forms/customer_view')
-def customer_inf():
-  return render_template('/forms/customer/customer_form_view.html')
+@app.route('/forms/account_detail/<id>')
+def account_detail(id):
+  searched_account=detail_account(id)
+  return render_template('/forms/customer/customer_form_new.html',searched_account=searched_account,tab_id="3")
 
+@app.route('/forms/new_account/edit')
+def account_edit():
+  user_edit=edit_user()
+  return render_template('/forms/customer/customer_form_new.html',user_edit=user_edit,tab_id="4")
+
+@app.route('/forms/new_account/updated',methods=['GET', 'POST'])
+def customer_updated():
+  data = request.form
+  db_customer_updated(data) 
+  return 'Usuario Atualizado'
+  
 """
 @app.route('/forms/dashboard')
 def dashboard1():

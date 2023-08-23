@@ -21,23 +21,9 @@
       {% include 'banner.html' %}
       <p class="newselector">Found the best place to Manage your fleet</p>
       {% include 'bodytext.html' %}
-      <div>
-
-      <table>
-        <tr>
-          <th style="width:20%">Firs Name</th>
-          <th style="width:20%">Last Name</th>
-          <th style="width:20%">Mobile</th>
-          <th style="width:20%">email</th>
-        </tr>
-        <tr>
-          {% for car_inf in car_inf %}
-            <td>{% include 'car_information.html' %}</td>
-          {% endfor %}
-        </tr>
-      </table>
-
-      </div>
+      {% for car_inf in car_inf %}
+          {% include 'car_information.html' %}
+      {% endfor %}
       {% include 'footer.html' %}
     </div>
   </body>

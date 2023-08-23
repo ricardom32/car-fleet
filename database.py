@@ -39,6 +39,8 @@ def cars_inf_db(id):
     id_int = int(id)
     id_int = id_int -1
     car_inf_dicts = result_all[int(id_int)]
+    print(type(car_inf_dicts))
+    print(car_inf_dicts)
     return car_inf_dicts
 
 # Car Registration
@@ -64,7 +66,6 @@ def login_check1(username, password):
     passwrod_db = user.password
     print('Password:', password)
     if check_password_hash(passwrod_db, password):
-      print(user)
       return user
     else:
         return None
@@ -74,7 +75,6 @@ def get_user_by_id(id):
   with engine.connect() as conn:
     result = conn.execute(text("SELECT * FROM accounts WHERE id = :id"), dict(id=id))
     row = result.fetchone()  
-    print(row)
     if row != None:
       logged_user = User(row[0], row[1], row[2], row[3])
       return logged_user
@@ -93,12 +93,97 @@ def signupuser(data):
     conn.execute(query, user_add)
   return
 
-
-# New customer account.
+# New customer account. (missing Experation date)
 def db_new_account(data):
   with engine.connect() as conn:
-   query = text("INSERT INTO customer_account (first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number,dl_country, address, complements, city, state,coutry, zipcode) VALUES (:first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :address, :complements, :city, :state, :coutry, :zipcode)")
+   query = text("INSERT INTO customer_account (first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode)")
    conn.execute(query, data)
+
+# New customer account.
+def db_customer_search(data):
+  print(data)
+  search_type = data['search_type']
+  search_field = data['search']
+  #print(first_name)
+  if search_type == "first_name":
+    with engine.connect() as conn:
+      result = conn.execute(text("SELECT * FROM customer_account WHERE first_name = :search_field"), dict(search_field=search_field))
+  elif search_type == "last_name":
+    with engine.connect() as conn: result = conn.execute(text("SELECT * FROM customer_account WHERE last_name = :search_field"), dict(search_field=search_field))
+  elif search_type == "email":
+    with engine.connect() as conn: result = conn.execute(text("SELECT * FROM customer_account WHERE email = :search_field"), dict(search_field=search_field))
+  elif search_type == "mobile":
+    with engine.connect() as conn: result = conn.execute(text("SELECT * FROM customer_account WHERE mobile = :search_field"), dict(search_field=search_field))
+  elif search_type == "dl_number":
+    with engine.connect() as conn: result = conn.execute(text("SELECT * FROM customer_account WHERE dl_number = :search_field"), dict(search_field=search_field))
+  else: result = "None"
+  search_account_dict = []
+  result_all = result.all()
+  #print(result_all)
+  number_register = len(result_all)
+  for row in range(number_register):
+    search_account_dict.append(result_all[row]._mapping)
+
+ #Delete all the data from Search Account table
+  with engine.connect() as conn:
+    #conn.execute(text("DELETE FROM search_account"))
+    conn.execute(text("TRUNCATE TABLE search_account"))
+  
+  #Update the Search account table with new value searched. 
+  with engine.connect() as conn:
+    query = text("INSERT INTO search_account (user_id, first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:user_id, :first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode)")
+    conn.execute(query, search_account_dict)
+  return search_account_dict
+
+def detail_account(id):
+  id=int(id)+1
+  with engine.connect() as conn:
+    result = conn.execute(text("SELECT * FROM search_account WHERE id = :id"), dict(id=id))
+    search_account_dict = []
+    result_all = result.fetchone() 
+    search_account_dict.append(result_all._mapping)
+    search_account_dict=search_account_dict[0]
+  
+  #Delete all the data from Search Account table
+  with engine.connect() as conn:
+    conn.execute(text("TRUNCATE TABLE search_account"))
+  
+  with engine.connect() as conn:
+    query = text("INSERT INTO search_account (user_id, first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:user_id, :first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode)")
+    conn.execute(query, search_account_dict)
+    return search_account_dict
+
+def edit_user():
+  with engine.connect() as conn:
+    result = conn.execute(text("SELECT * FROM search_account"))
+    user_edit_dicts = []
+    result_all = result.fetchone()
+    user_edit_dicts.append(result_all._mapping)
+    user_edit_dicts=user_edit_dicts[0]
+    return user_edit_dicts
+
+# Updated Customer account. 
+def db_customer_updated(data):
+  first_name = data['first_name']
+  user_id = data['user_id']
+  print(first_name,user_id)
+  with engine.connect() as conn:
+    result = conn.execute(text("SELECT * FROM search_account"))
+    users_dicts = []
+    result_all = result.all()
+    number_register = len(result_all)
+    for row in range(number_register):
+       users_dicts.append(result_all[row]._mapping)
+
+  
+  with engine.connect() as conn:
+    #query = text("UPDATE customer_account SET first_name = first_name WHERE user_id = 2") 
+    query = text("INSERT INTO search_account (user_id, first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:user_id, :first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode) ON DUPLICATE KEY UPDATE last_name ='Garcia2'")
+    conn.execute(query,users_dicts)
+
+  with engine.connect() as conn:
+    result = conn.execute(text("SELECT * FROM search_account"))
+  print(result.all())
 
 data1 = {
   "first_name": "Ford",
