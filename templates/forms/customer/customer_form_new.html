@@ -461,27 +461,27 @@
             <div class="fields">
                 <div class="input-field">
                     <label>First Name</label>
-                    <input type="text" name="first_name" placeholder="Enter your name">
+                    <input type="text" name="first_name" placeholder="Enter your name" required>
                 </div>
 
                 <div class="input-field">
                   <label>Last Name</label>
-                  <input type="text" name="last_name" placeholder="Enter your name" >
+                  <input type="text" name="last_name" placeholder="Enter your name" required>
                 </div>
 
                 <div class="input-field">
                     <label>Date of Birth</label>
-                    <input type="date" name="date_birth" placeholder="Enter birth date" >
+                    <input type="date" name="date_birth" placeholder="Enter birth date" required>
                 </div>
 
                 <div class="input-field">
                     <label>Email</label>
-                    <input type="text" name="email" placeholder="Enter your email" >
+                    <input type="text" name="email" placeholder="Enter your email" required>
                 </div>
 
                 <div class="input-field">
                     <label>Mobile Number</label>
-                    <input type='int' name="mobile" placeholder="Enter mobile number" >
+                    <input type='int' name="mobile" placeholder="Enter mobile number" required>
                 </div>
 
                 <div class="input-field">
@@ -567,6 +567,11 @@
              </div>
           </div>
         </form>
+           <form action="/forms/customer_search/image" method="post" enctype="multipart/form-data">
+              <label>Select Image File:</label>
+              <input type="file" name="image">
+              <input type="submit" name="submit" value="Upload">
+           </form>
       </div>
       
       <div id="search" class="tabcontent">

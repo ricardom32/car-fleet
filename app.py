@@ -1,5 +1,8 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for
-from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id, db_new_account, db_customer_search,detail_account,edit_user,db_customer_updated
+from flask import Flask, render_template, jsonify, request, redirect, url_for, flash
+from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id
+from db_account import db_new_account, db_customer_search,detail_account,edit_user,db_customer_updated
+import flash
+
 from werkzeug.datastructures import ImmutableMultiDict
 
 # project the access the database with Token
@@ -12,6 +15,11 @@ app = Flask(__name__)
 csrf = CSRFProtect(app)
 login_manager_app = LoginManager(app)
 app.config['SECRET_KEY'] = 'thisisasecretkeyforcarfleet'
+
+# Config used to upload the file
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif']
+app.config['UPLOAD_PATH'] = 'uploads'
 
 #itentify the user
 @login_manager_app.user_loader
@@ -35,16 +43,15 @@ def dashboard(id):
 
 @app.route("/car_inf/<id>/apply", methods=["post"])
 def apply_to_car(id):
-  #print("car_inf", id)
   data = request.form
   add_car_reg_db(data)
-  #print(data)
-  print(type(data))
   return render_template('car_reg_submit.html',car_reg=data)
 
+# Call login and singup html page
 @app.route('/login.html')
 def login():
-  return render_template('/login.html')
+  check_loging = 0
+  return render_template('/login2.html',check_loging=check_loging)
 
 @app.route('/login/apply', methods=['GET', 'POST'])
 def login_account():
@@ -56,12 +63,13 @@ def login_account():
         login_user(login_check)
         return render_template('/sidebar.html')
       else:
-        return 'Error 505'
+        msg = 'Incorrect login credentials !!!'
+        return render_template('/login2.html',msg=msg,check_loging=1)
 
 @app.route('/protected.html')
 @login_required
 def protected():
-  return "<h1>Esta pagina esta protegida, solo usuario autorizaod puedes accessar."
+  return "Esta pagina esta protegida, solo usuario autorizaod puedes accessar."
 
 @app.route('/logout')
 def logout():
@@ -91,12 +99,15 @@ def customer_account():
 @app.route('/forms/customer_search/apply',methods=['GET', 'POST'])
 def customer_search():
   search_customer = request.form
-  print(len(search_customer))
-  if len(search_customer) <= 2:
+  if len(search_customer) <= 2 or search_customer['search'] == "":
     return render_template('/forms/customer/customer_form_new.html',search_customer="",tab_id="2")
   else:
-    search_customer=db_customer_search(search_customer)
-    return render_template('/forms/customer/customer_form_new.html',search_customer=search_customer,tab_id="2")
+    result_search = db_customer_search(search_customer)
+    if db_customer_search(search_customer) == None:
+        return render_template('/forms/customer/customer_form_new.html',search_customer="",tab_id="2")
+    else:
+      search_customer=result_search
+      return render_template('/forms/customer/customer_form_new.html',search_customer=search_customer,tab_id="2")
 
 @app.route('/forms/account_detail/<id>')
 def account_detail(id):
@@ -113,7 +124,17 @@ def customer_updated():
   data = request.form
   db_customer_updated(data) 
   return 'Usuario Atualizado'
-  
+
+@app.route('/forms/customer_search/image',methods=['GET', 'POST'])
+def upload_dl():
+  data = request.form
+  db_customer_updated(data) 
+  return 'Usuario Atualizado'
+
+@app.route('/forms/file_upload')
+def uploadfile():
+  return render_template('/forms/customer/meu_test.html')
+
 """
 @app.route('/forms/dashboard')
 def dashboard1():
