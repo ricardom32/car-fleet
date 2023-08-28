@@ -39,6 +39,16 @@
   display: none;
 }
 
+.topnav .login {
+  float: right; 
+  padding: 5px 15px 5px 15px;
+  margin-right: 70px;
+  margin: 7px 40px 7px 0px; 
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 10px; 
+}
+      
 @media screen and (max-width: 600px) {
   .topnav a:not(:first-child) {display: none;}
   .topnav a.icon {
@@ -59,6 +69,11 @@
     display: block;
     text-align: left;
   }
+    .topnav.responsive .login {
+    float: left;
+    text-align: left;
+    margin-left:10px;
+  }
 }
     </style>
   <body>
@@ -67,6 +82,7 @@
   <a href="#news">News</a>
   <a href="#contact">Contact</a>
   <a href="#about">About</a>
+  <a class="login" href="/login.html">Login</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
   </a>

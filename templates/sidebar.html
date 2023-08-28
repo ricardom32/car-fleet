@@ -37,7 +37,7 @@ nav {
   width: 100%;
   display: flex;
   align-items: center;
-  background: #fff;
+  background: #D2ECF9;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
                       z-index: +1;
 }
@@ -130,13 +130,14 @@ nav.open ~ .overlay {
     <nav>
       <div class="logo">
         <i class="bx bx-menu menu-icon"></i>
-        <span class="logo-name">Cars-Fleet</span>
+        <img style="margin-left: 30px; width: 210px; height: 70px; " id='banner' src="https://car-fleet.ricardom32.repl.co/static/logo_car_fleet5.jpg">
+        <span class="logo-name"></span>
       </div>
 
       <div class="sidebar">
         <div class="logo">
           <i class="bx bx-menu menu-icon"></i>
-          <span class="logo-name">{{ current_user.email }}</span>
+          <span style="font-size: 13px;" class="logo-name">{{ current_user.email }}</span>
         </div>
 
         <div class="sidebar-content">

@@ -1,8 +1,8 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request
 from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id
 from db_account import db_new_account, db_customer_search,detail_account,edit_user,db_customer_updated,fileld
-
-from werkzeug.datastructures import ImmutableMultiDict
+#from flask import redirect, url_for
+#from werkzeug.datastructures import ImmutableMultiDict
 
 from werkzeug.utils import secure_filename
 import os
@@ -90,10 +90,12 @@ def logout():
   return render_template('home.html')
 
 @app.route('/forms/customer_new')
+@login_required
 def new_account():
   return render_template('/forms/customer/customer_form_new.html',tab_id="1")
 
 @app.route('/forms/new_account/apply',methods=['GET', 'POST'])
+@login_required
 def customer_account():
   data = request.form
   db_new_account(data) 

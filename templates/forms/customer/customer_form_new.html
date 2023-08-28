@@ -105,20 +105,20 @@
   /* Search Field Configuration ----------*/
 .input-filed_search_select{
       display: flex;
-      width: calc(100% / 5 - 15px);
+      width: 180px;
       flex-direction: column;
       margin: 4px 7px;
   }
 .input-field_search{
       display: flex;
-      width: calc(100% / 1.9 - 15px);
+      width: 340px;
       flex-direction: column;
       margin: 4px 7px;
   }
 #input-field_search_button{
       display: flex;
-      width: calc(100% / 8 - 15px);
-      padding: 10px 20px;
+      width: 110px;
+      padding: 8px 18px;
       border-radius: 5px;
       font-weight: bold;
       flex-direction: column;
@@ -148,6 +148,17 @@
       padding: 0 15px;
       height: 30px;
       margin: 8px 0;
+  }
+
+.input-field-file input, select{
+      outline: none;
+      font-size: 10px;
+      font-weight: 400;
+      color: #333;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      padding: 30px 80px 30px 80px;
+      margin: 8px 0 0 8px;
   }
 .input-field_search input, select{
       outline: none;
@@ -523,10 +534,9 @@
                       <label>Expiry Date</label>
                       <input type="date" name="dl_expired" placeholder="Enter expiry date" required>
                   </div>
-                  <div class="input-field">
-                       <div id="target">You can drag an image file here</div>
+                  <div class="input-field-file">
                       <label>Upload Driver's License</label><br>
-                  <input type="file" accept="image/*" />
+                  <input style=" opacity: 10%; border: solid; border-color: black;" type="file" accept="image/*" placeholder="You can drag an image file here" />
 
               </div>
               </div>
@@ -571,11 +581,6 @@
              </div>
           </div>
         </form>
-           <form action="/forms/customer_search/image" method="post" enctype="multipart/form-data">
-              <label>Select Image File:</label>
-              <input type="file" name="image">
-              <input type="submit" name="submit" value="Upload">
-           </form>
       </div>
       
       <div id="search" class="tabcontent">
@@ -658,25 +663,7 @@
          document.getElementById("demo").innerHTML = location.reload();
       }
 
-       
-  /*            
-      //Scrip for move second page of the form
-        const form = document.querySelector("form"),
-                nextBtn = form.querySelector(".nextBtn"),
-                backBtn = form.querySelector(".backBtn"),
-                allInput = form.querySelectorAll(".first input");
       
-        nextBtn.addEventListener("click", ()=> {
-            allInput.forEach(input => {
-                if(input.value != ""){
-                    form.classList.add('secActive');
-                }else{
-                    form.classList.remove('secActive');
-                }
-            })
-        })
-        backBtn.addEventListener("click", () => form.classList.remove('secActive'));
-    */
       </script>
 
   </body>
