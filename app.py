@@ -1,9 +1,11 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for, flash
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id
-from db_account import db_new_account, db_customer_search,detail_account,edit_user,db_customer_updated
-import flash
+from db_account import db_new_account, db_customer_search,detail_account,edit_user,db_customer_updated,fileld
 
 from werkzeug.datastructures import ImmutableMultiDict
+
+from werkzeug.utils import secure_filename
+import os
 
 # project the access the database with Token
 from flask_wtf.csrf import CSRFProtect
@@ -51,20 +53,31 @@ def apply_to_car(id):
 @app.route('/login.html')
 def login():
   check_loging = 0
-  return render_template('/login2.html',check_loging=check_loging)
+  return render_template('/login.html',check_loging=check_loging)
 
 @app.route('/login/apply', methods=['GET', 'POST'])
 def login_account():
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-      username = request.form['username']
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
+      email = request.form['email']
       password = request.form['password']
-      login_check = login_check1(username,password)
+      login_check = login_check1(email,password)
       if login_check != None:
         login_user(login_check)
         return render_template('/sidebar.html')
       else:
         msg = 'Incorrect login credentials !!!'
-        return render_template('/login2.html',msg=msg,check_loging=1)
+        return render_template('/login.html',msg=msg,check_loging=2)
+
+@app.route('/signup/apply',methods=['GET', 'POST'])
+def signupaccount():
+  data = request.form
+  result = signupuser(data)
+  if result == "USER_EXISTE":
+    msg="Email already used"
+    return render_template('/login.html',msg=msg,check_loging=2)
+  else:
+    msg="User Registrated, Please logned in."
+    return render_template('/login.html',msg=msg,check_loging=3)
 
 @app.route('/protected.html')
 @login_required
@@ -75,16 +88,6 @@ def protected():
 def logout():
   logout_user()
   return render_template('home.html')
-
-@app.route('/signup.html')
-def signup():
-  return render_template('/signup.html')
-
-@app.route('/signup/apply',methods=['GET', 'POST'])
-def signupaccount():
-  data = request.form
-  signupuser(data) 
-  return 'Usuario Registrado'
 
 @app.route('/forms/customer_new')
 def new_account():
@@ -125,15 +128,26 @@ def customer_updated():
   db_customer_updated(data) 
   return 'Usuario Atualizado'
 
-@app.route('/forms/customer_search/image',methods=['GET', 'POST'])
+@app.route('/file_upload.html')
 def upload_dl():
-  data = request.form
-  db_customer_updated(data) 
-  return 'Usuario Atualizado'
+  #data = request.form
+  #db_customer_updated(data) 
+  return  render_template('/file_upload.html') 
 
-@app.route('/forms/file_upload')
-def uploadfile():
-  return render_template('/forms/customer/meu_test.html')
+@app.route('/file_upload/submit',methods=['GET', 'POST'])
+def upload_dl1():
+    input = request.form
+    image = request.files['photo']
+    image.save(os.path.join('static/', secure_filename(image.filename)))
+    photo_n = image.filename
+    fileld(image)
+    return render_template("/reg_form_view.html", data = input, photo = photo_n)
+  
+#@app.route('/forms/file_upload',methods=['GET', 'POST'])
+#def uploadfile():
+  #file = request.form()
+  #fileld(file)
+#  return 'file_updated'
 
 """
 @app.route('/forms/dashboard')

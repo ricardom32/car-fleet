@@ -1,11 +1,19 @@
 {
   "files": {
+    "templates/forms/customer/file_upload.html": [
+      {
+        "id": "e98501f7-1462-449d-a123-3d8f1ad79e54",
+        "line": 10,
+        "version": 21,
+        "index": 222
+      }
+    ],
     "templates/sidebar.html": [
       {
         "id": "6bbd605c-6105-43a7-8ef4-8191db903441",
         "line": 154,
-        "version": 1329,
-        "index": 3275
+        "version": 1346,
+        "index": 3273
       }
     ]
   }

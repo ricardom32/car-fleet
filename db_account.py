@@ -8,29 +8,30 @@ engine =create_engine(my_secret,connect_args={"ssl": {"ssl_ca": "/etc/ssl/cert.p
 # New customer account. 
 def db_new_account(data):
   with engine.connect() as conn:
-   query = text("INSERT INTO customer_account (first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode)")
+   query = text("INSERT INTO customer_account (user_email, user_id, first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:user_email, :user_id, :first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode)")
    conn.execute(query, data)
 
 # New customer account.
 def db_customer_search(data):
   search_type = data['search_type']
   search_field = data['search']
+  user_email = data['user_email']
   if search_type == "first_name":
     print("teste_firtname")
     with engine.connect() as conn:
-      result = conn.execute(text("SELECT * FROM customer_account WHERE first_name = :search_field"), dict(search_field=search_field))
+      result = conn.execute(text("SELECT * FROM customer_account WHERE first_name = :search_field and user_email = :user_email"), dict(search_field=search_field, user_email=user_email))
   elif search_type == "last_name":
     with engine.connect() as conn: 
-      result = conn.execute(text("SELECT * FROM customer_account WHERE last_name = :search_field"), dict(search_field=search_field))
+      result = conn.execute(text("SELECT * FROM customer_account WHERE last_name = :search_field and user_email = :user_email"), dict(search_field=search_field, user_email=user_email))
   elif search_type == "email":
     with engine.connect() as conn: 
-      result = conn.execute(text("SELECT * FROM customer_account WHERE email = :search_field"), dict(search_field=search_field))
+      result = conn.execute(text("SELECT * FROM customer_account WHERE email = :search_field and user_email = :user_email"), dict(search_field=search_field, user_email=user_email))
   elif search_type == "mobile":
     with engine.connect() as conn: 
-      result = conn.execute(text("SELECT * FROM customer_account WHERE mobile = :search_field"), dict(search_field=search_field))
+      result = conn.execute(text("SELECT * FROM customer_account WHERE mobile = :search_field and user_email = :user_email"), dict(search_field=search_field, user_email=user_email))
   elif search_type == "dl_number":
     with engine.connect() as conn:
-      result = conn.execute(text("SELECT * FROM customer_account WHERE dl_number = :search_field"), dict(search_field=search_field))
+      result = conn.execute(text("SELECT * FROM customer_account WHERE dl_number = :search_field and user_email = :user_email"), dict(search_field=search_field, user_email=user_email))
   else: return None
 
   search_account_dict = []
@@ -47,7 +48,7 @@ def db_customer_search(data):
   
   #Update the Search account table with new value searched. 
   with engine.connect() as conn:
-    query = text("INSERT INTO search_account (user_id, first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:user_id, :first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode)")
+    query = text("INSERT INTO search_account (user_email, user_id, first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:user_email, :user_id, :first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode)")
     conn.execute(query, search_account_dict)
     return search_account_dict
 
@@ -65,7 +66,7 @@ def detail_account(id):
     conn.execute(text("TRUNCATE TABLE search_account"))
   
   with engine.connect() as conn:
-    query = text("INSERT INTO search_account (user_id, first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:user_id, :first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode)")
+    query = text("INSERT INTO search_account (user_email, user_id, first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:user_email, :user_id, :first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode)")
     conn.execute(query, search_account_dict)
     return search_account_dict
 
@@ -82,14 +83,40 @@ def edit_user():
 def db_customer_updated(data):
   user_id = data['user_id']
   first_name=data["first_name"]
+  user_email = data['user_email']
   #user_id = tuple(user_id)
   print(type(user_id))
   print(type(data))
   print(data)
   print(user_id)
 
-
   with engine.connect() as conn:
-    query = text("UPDATE customer_account SET user_id = :user_id, first_name = :first_name,  last_name = :last_name, date_birth = :date_birth, email = :email, mobile = :mobile, gender = :gender, occupation =:occupation, dl_number = :dl_number, dl_country =:dl_country, dl_expired =:dl_expired, address =:address, complements = :complements, city = :city, state = :state, coutry = :coutry, zipcode = :zipcode WHERE user_id = :user_id") 
+    query = text("UPDATE customer_account SET user_email = :user_email, user_id = :user_id, first_name = :first_name,  last_name = :last_name, date_birth = :date_birth, email = :email, mobile = :mobile, gender = :gender, occupation =:occupation, dl_number = :dl_number, dl_country =:dl_country, dl_expired =:dl_expired, address =:address, complements = :complements, city = :city, state = :state, coutry = :coutry, zipcode = :zipcode WHERE user_id = :user_id and user_email = :user_email") 
     conn.execute(query,data)
-  
+
+def fileld(image1):
+  #print(data)
+  #print(f)
+  # Open a file in binary mode
+ # file = open('static/male-regular-24.png','rb').read()
+  file = 'static/male-regular-24.png'
+  # We must encode the file to get base64 string
+  #file = base64.b64encode(file)
+  #args = ('100', 'Sample Name', file)
+  my_dictionary = {'id': 1,
+                   'image': image1
+                  }
+  #my_dictionary = {'id' :1,
+  #my_dictionary= 
+  #my_dictionary['image'] = image
+  #print(type(my_dictionary))
+  #print(my_dictionary)
+  #1,LOAD_FILE('C:\Users\Ricardo\Downloads\male-regular-24.png'))
+  #'image' :LOAD_FILE('C:\Users\Ricardo\Downloads\male-regular-24.png')
+  with engine.connect() as conn:
+  # query = text("INSERT INTO images image VALUES :image")
+    query = text("INSERT INTO images(id, image) VALUES(:id, :image");
+    #INSERT INTO xx_BLOB(ID,IMAGE) VALUES(:id,LOAD_FILE('static/male-regular-24.png'));
+    conn.execute(query,my_dictionary)
+
+

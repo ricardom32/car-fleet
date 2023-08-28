@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>File Uploading Form</title>
+        <style>
+            td{
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="width:400px; margin:25px auto;">
+            <h1>Registration Form Data</h1>
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>{{data.name}}</td>
+                </tr>
+                <tr>
+                    <td>Mobile</td>
+                    <td>{{data.mobile}}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{data.email}}</td>
+                </tr>
+                <tr>
+                    <td>Photo</td>
+                    <td><img src="/static/{{photo}}" alt="img"/></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </body>
+</html>
