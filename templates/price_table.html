@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+  <style>
+    @import url(http://fonts.googleapis.com/css?family=Ubuntu);
+    * {
+      margin: 0; 
+      padding: 0;
+    }
+        
+    body {
+      font-family: Ubuntu, arial, verdana;
+    }
+    
+    .pricing_table {
+      line-height: 150%; 
+      font-size: 12px; 
+      margin: 0 auto; 
+      width: 75%; 
+      max-width: 800px; 
+      padding-top: 10px;
+      margin-top: 100px;
+    }
+    .price_block {
+      width: 100%; 
+      color: #fff; 
+      float: left; 
+      list-style-type: none; 
+      transition: all 0.25s; 
+      position: relative; 
+      box-sizing: border-box;
+      
+      margin-bottom: 10px; 
+      border-bottom: 1px solid transparent; 
+    } 
+    .pricing_table h3 {
+      text-transform: uppercase; 
+      text-align: center;
+      padding: 5px 0; 
+      background: #333; 
+      margin: -10px 0 1px 0;
+    }
+    .price {
+      display: table; 
+      background: #444; 
+      width: 100%; 
+      height: 70px; 
+    }
+    .price_figure {
+      font-size: 24px; 
+      text-align: center;
+      text-transform: uppercase; 
+      vertical-align: middle; 
+      display: table-cell;
+    }
+    .price_number {
+      font-weight: bold; 
+      display: block;
+    }
+    .price_tenure {
+      font-size: 11px; 
+    }
+    .features {
+      background: #DEF0F4; 
+      color: #000;
+    }
+    .features li {
+      padding: 8px 15px;
+      border-bottom: 1px solid #ccc; 
+      font-size: 11px; 
+      list-style-type: none;
+    }
+    .footer {
+      padding: 15px; 
+      background: #DEF0F4;
+    }
+    .action_button {
+      text-decoration: none; 
+      color: #fff; 
+      font-weight: bold; 
+      border-radius: 5px; 
+      background: linear-gradient(#666, #333); 
+      padding: 5px 20px; 
+      font-size: 11px; 
+      text-transform: uppercase;
+    }
+    .price_block:hover {
+      box-shadow: 0 0 0px 5px rgba(0, 0, 0, 0.5); 
+      transform: scale(1.04) translateY(-5px); 
+      z-index: 1; 
+      border-bottom: 0 none;
+    }
+    .price_block:hover .price {
+      background:linear-gradient(#DB7224, #F9B84A); 
+      box-shadow: inset 0 0 45px 1px #DB7224;
+    }
+    .price_block:hover h3 {
+      background: #222;
+    }
+    .price_block:hover .action_button {
+      background: linear-gradient(#F9B84A, #DB7224); 
+    }
+    @media only screen and (min-width : 480px) and (max-width : 768px) {
+      .price_block {width: 50%;}
+      .price_block:nth-child(odd) {border-right: 1px solid transparent;}
+      .price_block:nth-child(3) {clear: both;}
+      .price_block:nth-child(odd):hover {border: 0 none;}
+    }
+    @media only screen and (min-width : 768px){
+      .price_block {width: 25%;}
+      .price_block {border-right: 1px solid transparent; border-bottom: 0 none;}
+      .price_block:last-child {border-right: 0 none;}
+      .price_block:hover {border: 0 none;}
+    }
+  </style>
+<body>
+</body>
+  {% include 'sidebar.html' %}
+
+  <ul class="pricing_table">
+    <div style="text-align: center; font-size: 40px; margin-bottom: 20px">Pricing for any fleet size</div>
+    <div style="text-align: center; font-size: 15px; margin-bottom: 30px">Full featured 14-day free trial included! No credit card required.</div>
+  	<li class="price_block">
+  	 <h3>Standard</h3>
+  		<div class="price">
+  			<div class="price_figure">
+  				<span class="price_number">$9.99</span>
+  				<span class="price_tenure">per month</span>
+  			</div>
+  		</div>
+  		<ul class="features">
+  			<li>Up to 5 vehicles</li>
+  			<li>Includes 1 branch</li>
+  			<li>1 staff accounts</li>
+  			<li>Unlimited Customers</li>
+  			<li>1 car-share connections</li>
+  			<li>And More</li>
+  		</ul>
+  		<div class="footer">
+  			<a href="#" class="action_button">Buy Now</a>
+  		</div>
+  	</li>
+      
+  	<li class="price_block">
+  	 <h3>Profession</h3>
+  		<div class="price">
+  			<div class="price_figure">
+  				<span class="price_number">$19.99</span>
+  				<span class="price_tenure">per month</span>
+  			</div>
+  		</div>
+  		<ul class="features">
+  			<li>Up to 20 vehicles</li>
+  			<li>Includes 2 branch</li>
+  			<li>2 staff accounts</li>
+  			<li>Unlimited Customers</li>
+  			<li>2 car-share connections</li>
+  			<li>And More</li>
+  		</ul>
+  		<div class="footer">
+  			<a href="#" class="action_button">Buy Now</a>
+  		</div>
+  	</li>
+    
+    <li class="price_block">
+  		<h3>Ultimate</h3>
+  		<div class="price">
+  			<div class="price_figure">
+  				<span class="price_number">$39.99</span>
+  				<span class="price_tenure">per month</span>
+  			</div>
+  		</div>
+  		<ul class="features">
+  			<li>Up to 150 vehicles</li>
+  			<li>Includes 5 branch</li>
+  			<li>10 staff accounts</li>
+  			<li>Unlimited Customers</li>
+  			<li>5 car-share connections</li>
+  			<li>And More</li>
+  		</ul>
+  		<div class="footer">
+  			<a href="#" class="action_button">Buy Now</a>
+  		</div>
+  	</li>
+  </ul>
+<script src="prefixfree.min.js" type="text/javascript"></script>
+</html>

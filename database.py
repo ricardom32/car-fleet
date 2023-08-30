@@ -89,7 +89,7 @@ def signupuser(data):
       query = text("INSERT INTO accounts (email, password) VALUES (:email, :password)")
       conn.execute(query, user_add)
     return "SIGNEDUP"
-
+"""
 data1 = {
   "first_name": "Ford",
   "last_name": "Mustang",
@@ -108,3 +108,4 @@ data1 = {
   "coutry": "Brazil",
   "zipcode": "94597",
 }
+"""

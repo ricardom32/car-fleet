@@ -1,8 +1,7 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, redirect
 from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id
-from db_account import db_new_account, db_customer_search,detail_account,edit_user,db_customer_updated,fileld
-#from flask import redirect, url_for
-#from werkzeug.datastructures import ImmutableMultiDict
+from db_account import db_new_account, db_customer_search ,detail_account, edit_user, db_customer_updated, fileld
+#from flask import url_for
 
 from werkzeug.utils import secure_filename
 import os
@@ -31,7 +30,7 @@ def load_user(id):
 @app.route("/")
 def Car_easy_fleet():
   car_inf = car_inf_db()
-  return render_template('home.html', car_inf=car_inf, company_name='Car Fleet')
+  return render_template('home_page1.html', car_inf=car_inf, company_name='Car Fleet')
 
 @app.route("/api/car_inf/<id>")
 def list_car_inf(id):
@@ -63,10 +62,15 @@ def login_account():
       login_check = login_check1(email,password)
       if login_check != None:
         login_user(login_check)
-        return render_template('/sidebar.html')
+        return redirect('/userlogged')
       else:
         msg = 'Incorrect login credentials !!!'
         return render_template('/login.html',msg=msg,check_loging=2)
+
+@app.route('/userlogged')
+@login_required
+def user_loged():
+  return render_template('/sidebar.html')
 
 @app.route('/signup/apply',methods=['GET', 'POST'])
 def signupaccount():
@@ -102,6 +106,7 @@ def customer_account():
   return 'Usuario Registrado'
 
 @app.route('/forms/customer_search/apply',methods=['GET', 'POST'])
+@login_required
 def customer_search():
   search_customer = request.form
   if len(search_customer) <= 2 or search_customer['search'] == "":
@@ -115,26 +120,29 @@ def customer_search():
       return render_template('/forms/customer/customer_form_new.html',search_customer=search_customer,tab_id="2")
 
 @app.route('/forms/account_detail/<id>')
+@login_required
 def account_detail(id):
   searched_account=detail_account(id)
   return render_template('/forms/customer/customer_form_new.html',searched_account=searched_account,tab_id="3")
 
 @app.route('/forms/new_account/edit')
+@login_required
 def account_edit():
   user_edit=edit_user()
   return render_template('/forms/customer/customer_form_new.html',user_edit=user_edit,tab_id="4")
 
 @app.route('/forms/new_account/updated',methods=['GET', 'POST'])
+@login_required
 def customer_updated():
   data = request.form
   db_customer_updated(data) 
   return 'Usuario Atualizado'
 
-@app.route('/file_upload.html')
+@app.route('/price_table')
 def upload_dl():
   #data = request.form
   #db_customer_updated(data) 
-  return  render_template('/file_upload.html') 
+  return  render_template('/price_table.html') 
 
 @app.route('/file_upload/submit',methods=['GET', 'POST'])
 def upload_dl1():
