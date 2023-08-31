@@ -1,7 +1,6 @@
 from flask import Flask, render_template, jsonify, request, redirect
-from database import car_inf_db, cars_inf_db, add_car_reg_db, login_check1, signupuser, get_user_by_id
+from database import login_check1, signupuser, get_user_by_id
 from db_account import db_new_account, db_customer_search ,detail_account, edit_user, db_customer_updated, fileld
-#from flask import url_for
 
 from werkzeug.utils import secure_filename
 import os
@@ -17,11 +16,6 @@ csrf = CSRFProtect(app)
 login_manager_app = LoginManager(app)
 app.config['SECRET_KEY'] = 'thisisasecretkeyforcarfleet'
 
-# Config used to upload the file
-app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
-app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif']
-app.config['UPLOAD_PATH'] = 'uploads'
-
 #itentify the user
 @login_manager_app.user_loader
 def load_user(id):
@@ -29,24 +23,8 @@ def load_user(id):
 
 @app.route("/")
 def Car_easy_fleet():
-  car_inf = car_inf_db()
-  return render_template('home_page1.html', car_inf=car_inf, company_name='Car Fleet')
+  return render_template('home.html', company_name='Car Fleet')
 
-@app.route("/api/car_inf/<id>")
-def list_car_inf(id):
-  car_inf=cars_inf_db(id)
-  return jsonify(car_inf)
-
-@app.route('/dashboard/<id>')
-def dashboard(id):
-  dashboard = cars_inf_db(id)
-  return render_template('dashboard.html',dashboard=dashboard)
-
-@app.route("/car_inf/<id>/apply", methods=["post"])
-def apply_to_car(id):
-  data = request.form
-  add_car_reg_db(data)
-  return render_template('car_reg_submit.html',car_reg=data)
 
 # Call login and singup html page
 @app.route('/login.html')
@@ -83,15 +61,10 @@ def signupaccount():
     msg="User Registrated, Please logned in."
     return render_template('/login.html',msg=msg,check_loging=3)
 
-@app.route('/protected.html')
-@login_required
-def protected():
-  return "Esta pagina esta protegida, solo usuario autorizaod puedes accessar."
-
 @app.route('/logout')
 def logout():
   logout_user()
-  return render_template('home.html')
+  return render_template('/home.html')
 
 @app.route('/forms/customer_new')
 @login_required
@@ -140,8 +113,6 @@ def customer_updated():
 
 @app.route('/price_table')
 def upload_dl():
-  #data = request.form
-  #db_customer_updated(data) 
   return  render_template('/price_table.html') 
 
 @app.route('/file_upload/submit',methods=['GET', 'POST'])
@@ -158,40 +129,6 @@ def upload_dl1():
   #file = request.form()
   #fileld(file)
 #  return 'file_updated'
-
-"""
-@app.route('/forms/dashboard')
-def dashboard1():
-  return render_template('/forms/dashboard.html')
-
-@app.route('/forms/car_form')
-def revenue():
-  return render_template('/guidances/form_template.html')
-
-@app.route('/forms/customer_forms')
-def customer():
-  return render_template('/guidances/form_template.html')
-
-@app.route('/forms/maintenance_form')
-def maintenance():
-  return render_template('/forms/maintenance_form.html')
-  
-@app.route('/forms/car_form')
-def car():
- return render_template('/forms/car_form.html')
-
-@app.route('/forms/employee_form')
-def employee():
-  return render_template('crossbar_test.html')
-
-@app.route('/homes')
-def news():
-  return render_template('/forms/employee_form.html')
-
-@app.route('/news')
-def contact():
-  return render_template('/forms/revenue.html')
-"""
 
 if __name__ == "__main__":
   csrf.init_app(app)
