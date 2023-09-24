@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+execfile("./lib/dhtmlxScheduler/connector/scheduler_connector.php")
+execfile("./config.php")
+hours_ = php_new_class("JSONOptionsConnector", lambda : JSONOptionsConnector(res_, dbtype_))
+hours_.render_table("hours", "id", "id(value),label(label)")
+priceRanges_ = php_new_class("JSONOptionsConnector", lambda : JSONOptionsConnector(res_, dbtype_))
+priceRanges_.render_table("price_ranges", "id", "id(value),label(label),minVal(minVal),maxVal(maxVal)")
+types_ = php_new_class("JSONOptionsConnector", lambda : JSONOptionsConnector(res_, dbtype_))
+types_.render_table("types", "id", "id(value),label(label)")
+statuses_ = php_new_class("JSONOptionsConnector", lambda : JSONOptionsConnector(res_, dbtype_))
+statuses_.render_table("statuses", "id", "id(value),label(label)")
+cars_ = php_new_class("JSONOptionsConnector", lambda : JSONOptionsConnector(res_, dbtype_))
+cars_.render_table("cars", "id", "id(value),label(label),price(price),link(link),type(type)")
+scheduler_ = php_new_class("JSONSchedulerConnector", lambda : JSONSchedulerConnector(res_, dbtype_))
+scheduler_.set_options("hour", hours_)
+scheduler_.set_options("priceRange", priceRanges_)
+scheduler_.set_options("type", types_)
+scheduler_.set_options("status", statuses_)
+scheduler_.set_options("car", cars_)
+scheduler_.render_table("rents", "id", "start_date,end_date,text,car,status")
+
+#!/usr/bin/env python3
+execfile(php_dirname(__FILE__) + "/lib/dhtmlxScheduler/connector/db_pdo.php")
+dbtype_ = "PDO"
+res_ = php_new_class("PDO", lambda : PDO("mysql:host=127.0.0.1;dbname=car_rent_json", "root", ""))

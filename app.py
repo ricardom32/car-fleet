@@ -32,6 +32,7 @@ def login():
   check_loging = 0
   return render_template('/login.html',check_loging=check_loging)
 
+#User enter the login and password
 @app.route('/login/apply', methods=['GET', 'POST'])
 def login_account():
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
@@ -45,10 +46,12 @@ def login_account():
         msg = 'Incorrect login credentials !!!'
         return render_template('/login.html',msg=msg,check_loging=2)
 
+#Open the page with logged user
 @app.route('/userlogged')
 @login_required
 def user_loged():
   return render_template('/sidebar.html')
+
 
 @app.route('/signup/apply',methods=['GET', 'POST'])
 def signupaccount():
@@ -69,40 +72,40 @@ def logout():
 @app.route('/forms/customer_new')
 @login_required
 def new_account():
-  return render_template('/forms/customer/customer_form_new.html',tab_id="1")
+  return render_template('/customer_form.html',tab_id="1")
 
 @app.route('/forms/new_account/apply',methods=['GET', 'POST'])
 @login_required
 def customer_account():
   data = request.form
   db_new_account(data) 
-  return 'Usuario Registrado'
+  return render_template('/pop-up.html')
 
 @app.route('/forms/customer_search/apply',methods=['GET', 'POST'])
 @login_required
 def customer_search():
   search_customer = request.form
-  if len(search_customer) <= 2 or search_customer['search'] == "":
-    return render_template('/forms/customer/customer_form_new.html',search_customer="",tab_id="2")
+  if len(search_customer) <= 3 or search_customer['search'] == "" :
+    return render_template('/customer_form.html',search_customer="",tab_id="2")
   else:
     result_search = db_customer_search(search_customer)
     if db_customer_search(search_customer) == None:
-        return render_template('/forms/customer/customer_form_new.html',search_customer="",tab_id="2")
+        return render_template('/customer_form.html',search_customer="",tab_id="2")
     else:
       search_customer=result_search
-      return render_template('/forms/customer/customer_form_new.html',search_customer=search_customer,tab_id="2")
+      return render_template('/customer_form.html',search_customer=search_customer,tab_id="2")
 
 @app.route('/forms/account_detail/<id>')
 @login_required
 def account_detail(id):
   searched_account=detail_account(id)
-  return render_template('/forms/customer/customer_form_new.html',searched_account=searched_account,tab_id="3")
+  return render_template('/customer_form.html',searched_account=searched_account,tab_id="3")
 
 @app.route('/forms/new_account/edit')
 @login_required
 def account_edit():
   user_edit=edit_user()
-  return render_template('/forms/customer/customer_form_new.html',user_edit=user_edit,tab_id="4")
+  return render_template('/customer_form.html',user_edit=user_edit,tab_id="4")
 
 @app.route('/forms/new_account/updated',methods=['GET', 'POST'])
 @login_required
@@ -124,11 +127,9 @@ def upload_dl1():
     fileld(image)
     return render_template("/reg_form_view.html", data = input, photo = photo_n)
   
-#@app.route('/forms/file_upload',methods=['GET', 'POST'])
-#def uploadfile():
-  #file = request.form()
-  #fileld(file)
-#  return 'file_updated'
+@app.route('/forms/file_upload')
+def uploadfile():
+  return render_template("/calendar1.html")
 
 if __name__ == "__main__":
   csrf.init_app(app)

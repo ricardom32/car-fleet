@@ -10,6 +10,22 @@ def db_new_account(data):
   with engine.connect() as conn:
    query = text("INSERT INTO customer_account (user_email, user_id, first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode) VALUES (:user_email, :user_id, :first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode)")
    conn.execute(query, data)
+   
+  with engine.connect() as conn:
+    #result = conn.execute(text("SELECT * FROM customer_account WHERE id = :id"),dict(id=last_insert_id();))
+    result = conn.execute(text("SELECT last_insert_id() from customer_account"))
+  last_id = result.fetchone() 
+  last_id=str(last_id)
+  last_id=last_id.replace('(','').replace(')','').replace(',','')
+  print(type(last_id))
+  last_id={
+    "id": last_id,
+    "user_id": last_id
+  }
+  print(last_id)
+  with engine.connect() as conn:
+   query = text("UPDATE customer_account SET user_id = :user_id WHERE id =:id")
+   conn.execute(query,last_id)
 
 # New customer account.
 def db_customer_search(data):
@@ -17,7 +33,6 @@ def db_customer_search(data):
   search_field = data['search']
   user_email = data['user_email']
   if search_type == "first_name":
-    print("teste_firtname")
     with engine.connect() as conn:
       result = conn.execute(text("SELECT * FROM customer_account WHERE first_name = :search_field and user_email = :user_email"), dict(search_field=search_field, user_email=user_email))
   elif search_type == "last_name":

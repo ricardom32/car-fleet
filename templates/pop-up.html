@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+  <style>
+    .popup {
+      width: 33.333333%;
+      padding: 15px;
+      left: 0;
+      margin-left: 33.333333%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: white;
+      position: absolute;
+      top: 15%;
+      box-shadow: 5px 5px 5px #000;
+      z-index: 10001;
+    }
+   .overlay {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,.85);
+      z-index: 10000;
+    }
+  </style>
+<body>
+</body>
+<div class="overlay">
+  <div class="popup">
+    <p>This is the message</p>
+    <div class="text-right">
+      <button class="btn btn-cancel">Cancel</button>
+      <button class="btn btn-primary">Ok</button>
+    </div>
+  </div>
+</div>
+</html>
