@@ -1,9 +1,10 @@
-from flask import Flask, render_template, jsonify, request, redirect
-from database import login_check1, signupuser, get_user_by_id
-from db_account import db_new_account, db_customer_search ,detail_account, edit_user, db_customer_updated, fileld
+from flask import Flask, render_template, request, redirect
+from db_loging import login_check1, signupuser, get_user_by_id
+#from db_account import db_new_account, db_customer_search ,detail_account, edit_user, db_customer_updated
+#from db_car import car_register,db_car_search ,detail_car, edit_car, db_car_updated
 
-from werkzeug.utils import secure_filename
-import os
+from app_car import app_car
+from app_customer import app_customer
 
 # project the access the database with Token
 from flask_wtf.csrf import CSRFProtect
@@ -12,6 +13,10 @@ from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required
 
 app = Flask(__name__)
+app.register_blueprint(app_car)
+app.register_blueprint(app_customer)
+#app.register_blueprint(app_login)
+
 csrf = CSRFProtect(app)
 login_manager_app = LoginManager(app)
 app.config['SECRET_KEY'] = 'thisisasecretkeyforcarfleet'
@@ -52,7 +57,6 @@ def login_account():
 def user_loged():
   return render_template('/sidebar.html')
 
-
 @app.route('/signup/apply',methods=['GET', 'POST'])
 def signupaccount():
   data = request.form
@@ -68,7 +72,8 @@ def signupaccount():
 def logout():
   logout_user()
   return render_template('/home.html')
-
+'''
+# Customer Information
 @app.route('/forms/customer_new')
 @login_required
 def new_account():
@@ -79,7 +84,7 @@ def new_account():
 def customer_account():
   data = request.form
   db_new_account(data) 
-  return render_template('/pop-up.html')
+  return 'New Register updated'
 
 @app.route('/forms/customer_search/apply',methods=['GET', 'POST'])
 @login_required
@@ -114,22 +119,63 @@ def customer_updated():
   db_customer_updated(data) 
   return 'Usuario Atualizado'
 
+# Car Information
+@app.route('/forms/car_form')
+@login_required
+def car_registration():
+  return render_template('/car_reg_form.html',tab_id="1")
+
+@app.route('/forms/car_register/apply',methods=['GET', 'POST'])
+@login_required
+def db_car_register():
+  data = request.form
+  car_register(data) 
+  return 'New Register updated'
+
+@app.route('/forms/car_search/apply',methods=['GET', 'POST'])
+@login_required
+def car_search():
+  search_customer = request.form
+  print(search_customer)
+  print(len(search_customer))
+  if len(search_customer) <= 3 or search_customer['search'] == "" :
+    print("1")
+    return render_template('/car_reg_form.html',search_customer="",tab_id="2")
+  else:
+    print("2")
+    result_search = db_car_search(search_customer)
+    if db_car_search(search_customer) == None:
+      print("3")
+      return render_template('/car_reg_form.html',search_customer="",tab_id="2")
+    else:
+      print("4")
+      search_customer=result_search
+      print(search_customer)
+      return render_template('/car_reg_form.html',search_customer=search_customer,tab_id="2")
+
+@app.route('/forms/car_detail/<id>')
+@login_required
+def car_detail(id):
+  searched_account=detail_car(id)
+  return render_template('/car_reg_form.html',searched_account=searched_account,tab_id="3")
+
+@app.route('/forms/new_car/edit')
+@login_required
+def car_edit():
+  user_car=edit_car()
+  return render_template('/car_reg_form.html',user_car=user_car,tab_id="4")
+
+@app.route('/forms/new_car/updated',methods=['GET', 'POST'])
+@login_required
+def car_updated():
+  data = request.form
+  db_car_updated(data) 
+  return 'Usuario Atualizado'
+'''
+# This call the price table
 @app.route('/price_table')
 def upload_dl():
   return  render_template('/price_table.html') 
-
-@app.route('/file_upload/submit',methods=['GET', 'POST'])
-def upload_dl1():
-    input = request.form
-    image = request.files['photo']
-    image.save(os.path.join('static/', secure_filename(image.filename)))
-    photo_n = image.filename
-    fileld(image)
-    return render_template("/reg_form_view.html", data = input, photo = photo_n)
-  
-@app.route('/forms/file_upload')
-def uploadfile():
-  return render_template("/calendar1.html")
 
 if __name__ == "__main__":
   csrf.init_app(app)
