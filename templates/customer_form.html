@@ -623,11 +623,11 @@
               {% for i in range(0, search_customer.__len__()) %}                
                 <tr>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <td> <a href="https://cars-fleet.ricardom32.repl.co/forms/account_detail/{{i}}">{{search_customer[i]['first_name'] }}</a></td>
-                    <td> <a href="https://cars-fleet.ricardom32.repl.co/forms/account_detail/{{i}}">{{search_customer[i]['last_name'] }}</a></td>
-                    <td> <a href="https://cars-fleet.ricardom32.repl.co/forms/account_detail/{{i}}">{{search_customer[i]['mobile'] }}</a></td>
-                    <td> <a href="https://cars-fleet.ricardom32.repl.co/forms/account_detail/{{i}}">{{search_customer[i]['email'] }} </a></td>
-                    <td> <a href="https://cars-fleet.ricardom32.repl.co/forms/account_detail/{{i}}">{{search_customer[i]['dl_number'] }}</a></td>
+                    <td> <a href="/forms/account_detail/{{i}}">{{search_customer[i]['first_name'] }}</a></td>
+                    <td> <a href="/forms/account_detail/{{i}}">{{search_customer[i]['last_name'] }}</a></td>
+                    <td> <a href="/forms/account_detail/{{i}}">{{search_customer[i]['mobile'] }}</a></td>
+                    <td> <a href="/forms/account_detail/{{i}}">{{search_customer[i]['email'] }} </a></td>
+                    <td> <a href="/forms/account_detail/{{i}}">{{search_customer[i]['dl_number'] }}</a></td>
                 </tr>
               {% endfor %}
             </div>
