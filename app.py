@@ -1,10 +1,16 @@
 from flask import Flask, render_template, request, redirect
 from db_loging import login_check1, signupuser, get_user_by_id
-#from db_account import db_new_account, db_customer_search ,detail_account, edit_user, db_customer_updated
-#from db_car import car_register,db_car_search ,detail_car, edit_car, db_car_updated
+
+# import password liberies
+from flask import*
+from flask_mail import*
+from random import*
+import ssl
 
 from app_car import app_car
 from app_customer import app_customer
+from app_maintenance import app_maintenance
+#from app_password_reset import app_password_reset
 
 # project the access the database with Token
 from flask_wtf.csrf import CSRFProtect
@@ -12,10 +18,21 @@ from flask_wtf.csrf import CSRFProtect
 # login
 from flask_login import LoginManager, login_user, logout_user, login_required
 
+# import modules Flask and Bluprints
 app = Flask(__name__)
 app.register_blueprint(app_car)
 app.register_blueprint(app_customer)
-#app.register_blueprint(app_login)
+app.register_blueprint(app_maintenance)
+
+#google SMTP server
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT']=465
+app.config['MAIL_USERNAME']='carsfleetus@gmail.com'
+app.config['MAIL_PASSWORD']='gzlf bgcz mlpz aady'
+app.config['MAIL_USE_TLS']=False
+app.config['MAIL_USE_SSL']=True
+mail=Mail(app)
+otp=randint(100000,999999)
 
 csrf = CSRFProtect(app)
 login_manager_app = LoginManager(app)
@@ -72,110 +89,32 @@ def signupaccount():
 def logout():
   logout_user()
   return render_template('/home.html')
-'''
-# Customer Information
-@app.route('/forms/customer_new')
-@login_required
-def new_account():
-  return render_template('/customer_form.html',tab_id="1")
 
-@app.route('/forms/new_account/apply',methods=['GET', 'POST'])
-@login_required
-def customer_account():
-  data = request.form
-  db_new_account(data) 
-  return 'New Register updated'
-
-@app.route('/forms/customer_search/apply',methods=['GET', 'POST'])
-@login_required
-def customer_search():
-  search_customer = request.form
-  if len(search_customer) <= 3 or search_customer['search'] == "" :
-    return render_template('/customer_form.html',search_customer="",tab_id="2")
-  else:
-    result_search = db_customer_search(search_customer)
-    if db_customer_search(search_customer) == None:
-        return render_template('/customer_form.html',search_customer="",tab_id="2")
-    else:
-      search_customer=result_search
-      return render_template('/customer_form.html',search_customer=search_customer,tab_id="2")
-
-@app.route('/forms/account_detail/<id>')
-@login_required
-def account_detail(id):
-  searched_account=detail_account(id)
-  return render_template('/customer_form.html',searched_account=searched_account,tab_id="3")
-
-@app.route('/forms/new_account/edit')
-@login_required
-def account_edit():
-  user_edit=edit_user()
-  return render_template('/customer_form.html',user_edit=user_edit,tab_id="4")
-
-@app.route('/forms/new_account/updated',methods=['GET', 'POST'])
-@login_required
-def customer_updated():
-  data = request.form
-  db_customer_updated(data) 
-  return 'Usuario Atualizado'
-
-# Car Information
-@app.route('/forms/car_form')
-@login_required
-def car_registration():
-  return render_template('/car_reg_form.html',tab_id="1")
-
-@app.route('/forms/car_register/apply',methods=['GET', 'POST'])
-@login_required
-def db_car_register():
-  data = request.form
-  car_register(data) 
-  return 'New Register updated'
-
-@app.route('/forms/car_search/apply',methods=['GET', 'POST'])
-@login_required
-def car_search():
-  search_customer = request.form
-  print(search_customer)
-  print(len(search_customer))
-  if len(search_customer) <= 3 or search_customer['search'] == "" :
-    print("1")
-    return render_template('/car_reg_form.html',search_customer="",tab_id="2")
-  else:
-    print("2")
-    result_search = db_car_search(search_customer)
-    if db_car_search(search_customer) == None:
-      print("3")
-      return render_template('/car_reg_form.html',search_customer="",tab_id="2")
-    else:
-      print("4")
-      search_customer=result_search
-      print(search_customer)
-      return render_template('/car_reg_form.html',search_customer=search_customer,tab_id="2")
-
-@app.route('/forms/car_detail/<id>')
-@login_required
-def car_detail(id):
-  searched_account=detail_car(id)
-  return render_template('/car_reg_form.html',searched_account=searched_account,tab_id="3")
-
-@app.route('/forms/new_car/edit')
-@login_required
-def car_edit():
-  user_car=edit_car()
-  return render_template('/car_reg_form.html',user_car=user_car,tab_id="4")
-
-@app.route('/forms/new_car/updated',methods=['GET', 'POST'])
-@login_required
-def car_updated():
-  data = request.form
-  db_car_updated(data) 
-  return 'Usuario Atualizado'
-'''
 # This call the price table
 @app.route('/price_table')
 def upload_dl():
   return  render_template('/price_table.html') 
+
+# Password Rest
+@app.route('/verify',methods=['POST'])
+def verify():
+  email=request.form['email']
+  msg=Message('OTP',sender='carsfleetus@gmail.com',recipients=[email])
+  msg.body=str(otp)
+  mail.send(msg)
+  return render_template('reset_password.html',check_reset=2)
+
+@app.route('/validate',methods=['POST'])
+def validate():
+  user_otp=request.form['otp']
+  if otp==int(user_otp):
+    return "<h2>Email verification is successful</h2>"
+  else:
+    return "<h2>Verification failed otp does not match</h2>"
+
+@app.route('/reset_password')
+def passwrod_reset():
+  return render_template('/reset_password.html',check_reset=0)
 
 if __name__ == "__main__":
   csrf.init_app(app)
