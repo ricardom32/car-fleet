@@ -285,6 +285,7 @@
       <div id="account" class="tabcontent">
           {% if tab_id == "2" or tab_id == "1" : %}
               <h2> No Customer Account</h2>
+          <!--Detail information -->
           {% elif tab_id == "3" %}          
           <div class="details personal">
               <span class="title">Personal Details</span>
@@ -334,6 +335,10 @@
                       <label>Expiry Date</label>
                       {{searched_account['dl_expired'] }}
                   </div>
+                  <div class="input-field-file">
+                      <label>Upload Driver's License</label><br>
+                    <img src="/static/photo_id_2.png" alt="Girl in a jacket" width="220" height="110">                      
+                  </div>
               </div>
             </div>
             <div class="details address">
@@ -374,7 +379,7 @@
           </div>
         {% elif tab_id == "4" %}          
           <div class="details personal">
-            <form action="/forms/new_account/updated" method="post">
+            <form action="/forms/new_account/updated" method="post" action="/upload" enctype="multipart/form-data">>
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
               <!-- Link the customer_account with accounts -->
               <input type="hidden" name="user_email" value="{{ current_user.email }}"/>
@@ -426,6 +431,10 @@
                       <label>Expiry Date</label>
                       <input type="text" name="dl_expired" value="{{user_edit['dl_expired']}}">
                   </div>
+                  <div class="input-field-file">
+                      <label>Upload Driver's License teste</label><br>
+                    <input style=" opacity: 60%; border: solid; border-color: black;" type="file" name="photo" accept="image/*" value="{{user_edit['photo']}}" />
+                  </div>
               </div>
             </div>
             <div class="details address">
@@ -464,8 +473,9 @@
          {% endif %}
       </div>
       
+      <!-- Register New Customer -->
       <div id="new_account" class="tabcontent">
-        <form action="/forms/new_account/apply" method="post">
+        <form action="/forms/new_account/apply" method="post" action="/upload" enctype="multipart/form-data">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
           <input type="hidden" name="user_email" value="{{ current_user.email }}"/>
           <input type="hidden" name="user_id" value="0"/>
@@ -535,9 +545,8 @@
                   </div>
                   <div class="input-field-file">
                       <label>Upload Driver's License</label><br>
-                  <input style=" opacity: 10%; border: solid; border-color: black;" type="file" accept="image/*" placeholder="You can drag an image file here" />
-
-              </div>
+                      <input style=" opacity: 60%; border: solid; border-color: black;" type="file" name="photo" accept="image/*" placeholder="You can drag an image file here" />
+                  </div>
               </div>
           </div> 
           <div class="details address">
@@ -576,7 +585,7 @@
                  
              </div>
              <div class="button_1">
-               <input type="submit">
+               <input type="submit" value="Upload">
              </div>
           </div>
         </form>

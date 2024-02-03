@@ -8,7 +8,7 @@ from db_car import car_register,db_car_search ,detail_car, edit_car, db_car_upda
 app_car = Blueprint('app_car',__name__)
 
 # Car Information
-@app_car.route('/forms/car_form')
+@app_car.route('/forms/car')
 @login_required
 def car_registration():
   return render_template('/car_reg_form.html',tab_id="1")

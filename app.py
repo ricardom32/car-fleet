@@ -7,10 +7,14 @@ from flask_mail import*
 from random import*
 import ssl
 
+#Blueprint library
 from app_car import app_car
 from app_customer import app_customer
 from app_maintenance import app_maintenance
-#from app_password_reset import app_password_reset
+from app_reservation import app_reservation
+from app_employee import app_employee
+from app_expense import app_expense
+from app_dashboard import app_dashboard
 
 # project the access the database with Token
 from flask_wtf.csrf import CSRFProtect
@@ -23,12 +27,17 @@ app = Flask(__name__)
 app.register_blueprint(app_car)
 app.register_blueprint(app_customer)
 app.register_blueprint(app_maintenance)
+app.register_blueprint(app_reservation)
+app.register_blueprint(app_employee)
+app.register_blueprint(app_expense)
+app.register_blueprint(app_dashboard)
 
 #google SMTP server
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT']=465
 app.config['MAIL_USERNAME']='carsfleetus@gmail.com'
-app.config['MAIL_PASSWORD']='gzlf bgcz mlpz aady'
+app.config['MAIL_PASSWORD']='shhi aepu vibk bbpa'
+#app.config['MAIL_PASSWORD']='gzlf bgcz mlpz aady'
 app.config['MAIL_USE_TLS']=False
 app.config['MAIL_USE_SSL']=True
 mail=Mail(app)
@@ -99,7 +108,7 @@ def upload_dl():
 @app.route('/verify',methods=['POST'])
 def verify():
   email=request.form['email']
-  msg=Message('OTP',sender='carsfleetus@gmail.com',recipients=[email])
+  msg=Message('Password Reset Request',sender='carsfleetus@gmail.com',recipients=[email])
   msg.body=str(otp)
   mail.send(msg)
   return render_template('reset_password.html',check_reset=2)

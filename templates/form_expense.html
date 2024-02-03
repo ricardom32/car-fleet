@@ -10,7 +10,7 @@
       <!----===== Iconscout CSS ===== -->
       <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
   
-      <title>Maintenance Form</title> 
+      <title>Reservation Form</title> 
   </head>
   <style>
     /* ===== Google Font Import - Poppins ===== */
@@ -268,15 +268,15 @@
       <header>Car Information</header>
       <div class="tab">
         {% if tab_id == "2": %}
-           <button class="tablinks" onclick="openCity(event, 'new_account')" >Registration</button>
+           <button class="tablinks" onclick="openCity(event, 'new_account')" >Reservation</button>
            <button class="tablinks" onclick="openCity(event, 'search')"id="defaultOpen">Search </button>
            <button class="tablinks" onclick="openCity(event, 'account')">Detail</button>
           {% elif tab_id == "3" or tab_id == "4": %}
-           <button class="tablinks" onclick="openCity(event, 'new_account')" >Registration</button>
+           <button class="tablinks" onclick="openCity(event, 'new_account')" >Reservation</button>
            <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
            <button class="tablinks" onclick="openCity(event, 'account')"id="defaultOpen">Detail</button>
         {% else %}
-          <button class="tablinks" onclick="openCity(event, 'new_account')" id="defaultOpen">Registration</button>
+          <button class="tablinks" onclick="openCity(event, 'new_account')" id="defaultOpen">Reservation</button>
           <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
           <button class="tablinks" onclick="openCity(event, 'account')">Detail</button>
         {% endif %}

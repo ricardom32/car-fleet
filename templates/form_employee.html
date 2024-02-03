@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<!--=== Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!----======== CSS ======== -->
+      <link rel="stylesheet" href="style.css">
+       
+      <!----===== Iconscout CSS ===== -->
+      <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  
+      <title>Employee Form</title> 
+  </head>
+  <style>
+    /* ===== Google Font Import - Poppins ===== */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+  
+  *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+  }
+    
+  body{
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #4070f4;
+  }
+  .container{
+      position: relative;
+      max-width: 900px;
+      min-height: 500px;
+      width: 100%;
+      border-radius: 6px;
+      padding: 10px 20px 20px 20px;
+      margin: 0 15px;
+      background-color: #fff;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      margin-top: 90px;
+      margin-bottom: 20px;
+  }
+  .container header{
+      position: relative;
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+  }
+  .title{
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      margin: 6px 0;
+      color: #333;
+  }
+
+ .fields{
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+  }
+
+.button_1 input{
+  background-color: #008CBA; /* Blue */
+  padding: 8px 32px;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 18px;
+  margin: 6px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Field with 3 coloun */
+.input-field{
+      display: flex;
+      width: calc(100% / 3 - 15px);
+      flex-direction: column;
+      margin: 4px 7px;
+  }
+  .input-field label{
+      font-size: 12px;
+      font-weight: 500;
+      color: #2e2e2e;
+  }
+
+   /* Field with 1 coloun */ 
+ .input-field1{
+      display: flex;
+      width: calc(100% / 1 - 15px);
+      flex-direction: column;
+      margin: 4px 7px;
+  }
+  .input-field1 label{
+      font-size: 12px;
+      font-weight: 500;
+      color: #2e2e2e;
+  }
+  /* Search Field Configuration ----------*/
+.input-filed_search_select{
+      display: flex;
+      width: 180px;
+      flex-direction: column;
+      margin: 4px 7px;
+  }
+.input-field_search{
+      display: flex;
+      width: 340px;
+      flex-direction: column;
+      margin: 4px 7px;
+  }
+#input-field_search_button{
+      display: flex;
+      width: 110px;
+      padding: 8px 18px;
+      border-radius: 5px;
+      font-weight: bold;
+      flex-direction: column;
+      margin: 4px 7px;
+  }
+  
+  /* -------------------------------------------------------------*/
+  
+.input-field1 input, select{
+      outline: none;
+      font-size: 14px;
+      font-weight: 400;
+      color: #333;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      padding: 0 15px;
+      height: 30px;
+      margin: 8px 0;
+  }
+.input-field input, select{
+      outline: none;
+      font-size: 14px;
+      font-weight: 400;
+      color: #333;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      padding: 0 15px;
+      height: 30px;
+      margin: 8px 0;
+  }
+
+.input-field-file input, select{
+      outline: none;
+      font-size: 10px;
+      font-weight: 400;
+      color: #333;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      padding: 30px 80px 30px 80px;
+      margin: 8px 0 0 8px;
+  }
+.input-field_search input, select{
+      outline: none;
+      font-size: 14px;
+      font-weight: 400;
+      color: #333;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      padding: 0 15px;
+      height: 40px;
+      margin: 8px 0;
+  }
+
+  /* Mobile layout */
+  @media (max-width: 750px) {
+      .container{
+          overflow-y: scroll;
+      }
+      .container::-webkit-scrollbar{
+         display: none;
+      }
+     .fields .input-field {
+          width: calc(100% / 2 - 15px);
+      }
+  }
+  @media (max-width: 550px) {
+    .fields .input-field{
+          width: 100%;
+      }
+  }
+  
+  /*---------CSS Crossbar Tabs--------------------------------*/
+    /* Style the tab */
+  .tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+  }
+  
+  /* Style the buttons inside the tab */
+  .tab button {
+    background-color: inherit;
+    width: 150px;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: 0.3s;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: #ddd;
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: #ccc;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+    
+  /*------------------ Customer Table ----------------- */
+    .table {
+      font-family: arial, sans-serif;
+      width: 100%;
+      margin-top: 15px;
+      overflow-x: auto;
+    }
+    
+    .table td, th {
+      border: 0px solid #dddddd;
+      text-align: left;
+      padding: 5px;
+      margin: 0px;
+      height: 5px;
+    }
+    .table tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    .table tr:not(:first-child):hover {
+      background-color: gray;
+      cursor: pointer;
+    }
+    td a { 
+      display: block; 
+      border: 0px solid black;
+      padding: 0px; 
+      color: black;
+      text-decoration-line: none;
+    }
+  </style>
+  
+  <body>
+    {% include 'sidebar.html' %}
+    <div class="container">
+      <header>Employee Account</header>
+      <div class="tab">
+        {% if tab_id == "2": %}
+           <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button>
+           <button class="tablinks" onclick="openCity(event, 'search')"id="defaultOpen">Search </button>
+           <button class="tablinks" onclick="openCity(event, 'account')">Account</button>
+          {% elif tab_id == "3" or tab_id == "4": %}
+           <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button>
+           <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
+           <button class="tablinks" onclick="openCity(event, 'account')"id="defaultOpen">Account</button>
+        {% else %}
+          <button class="tablinks" onclick="openCity(event, 'new_account')" id="defaultOpen">New Account</button>
+          <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
+          <button class="tablinks" onclick="openCity(event, 'account')">Account</button>
+        {% endif %}
+      </div>
+
+      <div id="account" class="tabcontent">
+          {% if tab_id == "2" or tab_id == "1" : %}
+              <h2> No Customer Account</h2>
+          {% elif tab_id == "3" %}          
+          <div class="details personal">
+              <span class="title">Personal Details</span>
+              <div class="fields">
+                <div class="input-field">
+                  <label>First Name</label>
+                  {{searched_account['first_name']}}
+                </div>
+                <div class="input-field">
+                  <label>Last Name</label>
+                  {{searched_account['last_name'] }}
+                </div>
+                <div class="input-field">
+                    <label>Date of Birth</label>
+                    {{searched_account['date_birth'] }}
+                </div>
+                <div class="input-field">
+                    <label>Email</label>
+                    {{searched_account['email'] }}
+                </div>
+                <div class="input-field">
+                    <label>Mobile Number</label>
+                    {{searched_account['mobile'] }}
+                </div>    
+               <div class="input-field">
+                    <label>Gender</label>
+                    {{searched_account['gender'] }}
+                </div>
+                <div class="input-field">
+                    <label>Occupation</label>
+                    {{searched_account['occupation'] }}
+                </div>
+              </div>
+            </div>
+            <div class="details ID">
+              <span class="title">Driver's License</span>
+              <div class="fields">
+                  <div class="input-field">
+                      <label>ID Number</label>
+                      {{searched_account['dl_number'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>Issued Country</label>
+                      {{searched_account['dl_country'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>Expiry Date</label>
+                      {{searched_account['dl_expired'] }}
+                  </div>
+              </div>
+            </div>
+            <div class="details address">
+              <span class="title">Address Account</span>
+              <div class="fields">
+                  <div class="input-field1">
+                      <label>Address</label>
+                      {{searched_account['address'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>Complements</label>
+                      {{searched_account['complements'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>City</label>
+                      {{searched_account['city'] }}  
+                  </div>
+                  <div class="input-field">
+                      <label>State</label>
+                      {{searched_account['state'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>Coutry</label>
+                      {{searched_account['coutry'] }}
+                  </div>
+                  <div class="input-field">
+                      <label>Zip Code</label>
+                     {{searched_account['zipcode'] }}
+                   </div>
+                </div>
+              <form action="/forms/new_account/edit">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                  <div class="button_1">
+                     <input type="submit" value="Edit">
+                   </div>
+              </form>
+            
+          </div>
+        {% elif tab_id == "4" %}          
+          <div class="details personal">
+            <form action="/forms/new_account/updated" method="post">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <!-- Link the customer_account with accounts -->
+              <input type="hidden" name="user_email" value="{{ current_user.email }}"/>
+              <input type="hidden" name="user_id" value="{{user_edit['user_id']}}"/>
+              <span class="title">Personal Details</span>
+              <div class="fields">
+                <div class="input-field">
+                  <label>First Name</label>
+                  <input type="text" name="first_name" value="{{user_edit['first_name']}}">
+                </div>
+                <div class="input-field">
+                  <label>Last Name</label>
+                  <input type="text" name="last_name" value="{{user_edit['last_name']}}">
+                </div>
+                <div class="input-field">
+                    <label>Date of Birth</label>
+                    <input type="text" name="date_birth" value="{{user_edit['date_birth']}}">
+                </div>
+                <div class="input-field">
+                    <label>Email</label>
+                    <input type="text" name="email" value="{{user_edit['email']}}">
+                </div>
+                <div class="input-field">
+                    <label>Mobile Number</label>
+                    <input type="text" name="mobile" value="{{user_edit['mobile']}}">
+                </div>    
+               <div class="input-field">
+                    <label>Gender</label>
+                    <input type="text" name="gender" value="{{user_edit['gender']}}">
+                </div>
+                <div class="input-field">
+                    <label>Occupation</label>
+                    <input type="text" name="occupation" value="{{user_edit['occupation']}}">
+                </div>
+              </div>
+            </div>
+            <div class="details ID">
+              <span class="title">Driver's License</span>
+              <div class="fields">
+                  <div class="input-field">
+                      <label>ID Number</label>
+                      <input type="text" name="dl_number" value="{{user_edit['dl_number']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>Issued Country</label>
+                      <input type="text" name="dl_country" value="{{user_edit['dl_country']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>Expiry Date</label>
+                      <input type="text" name="dl_expired" value="{{user_edit['dl_expired']}}">
+                  </div>
+              </div>
+            </div>
+            <div class="details address">
+              <span class="title">Address Account</span>
+              <div class="fields">
+                  <div class="input-field1">
+                      <label>Address</label>
+                      <input type="text" name="address" value="{{user_edit['address']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>Complements</label>
+                      <input type="text" name="complements" value="{{user_edit['complements']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>City</label>
+                      <input type="text" name="city" value="{{user_edit['city']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>State</label>
+                      <input type="text" name="state" value="{{user_edit['state']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>Coutry</label>
+                      <input type="text" name="coutry" value="{{user_edit['coutry']}}">
+                  </div>
+                  <div class="input-field">
+                      <label>Zip Code</label>
+                       <input type="text" name="zipcode" value="{{user_edit['zipcode']}}">
+                   </div>
+                </div>
+              <div class="button_1">
+               <input type="submit" value="Update">
+             </div>
+            </form>
+          </div>
+         {% endif %}
+      </div>
+      
+      <div id="new_account" class="tabcontent">
+        <form action="/forms/new_account/apply" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <input type="hidden" name="user_email" value="{{ current_user.email }}"/>
+          <input type="hidden" name="user_id" value="0"/>
+          <div class="details personal">
+            <span class="title">Personal Details</span>
+  
+            <div class="fields">
+                <div class="input-field">
+                    <label>First Name</label>
+                    <input type="text" name="first_name" placeholder="Enter your name" required>
+                </div>
+
+                <div class="input-field">
+                  <label>Last Name</label>
+                  <input type="text" name="last_name" placeholder="Enter your name" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Date of Birth</label>
+                    <input type="date" name="date_birth" placeholder="Enter birth date" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Mobile Number</label>
+                    <input type='int' name="mobile" placeholder="Enter mobile number" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Gender</label>
+                    <select name="gender">
+                        <option disabled selected>Select gender</option>
+                        <option value="Male"> Male</option>
+                        <option value="Female"> Female</option>
+                        <option value="Others"> Others</option>
+                    </select>
+                   <input type="hidden">
+                </div>
+
+                <div class="input-field">
+                    <label>Occupation</label>
+                    <input type="text" name="occupation" placeholder="Enter your ccupation" required>
+                </div>
+            </div>
+          </div>
+          <div class="details ID">
+              <span class="title">Driver's License</span>
+
+              <div class="fields">
+                  <div class="input-field">
+                      <label>ID Number</label>
+                      <input type="text" name="dl_number" placeholder="Enter ID type" required>
+                  </div>
+                
+                  <div class="input-field">
+                      <label>Issued Country</label>
+                      <input type="text" name="dl_country" placeholder="Enter issued authority" required>
+                  </div>
+
+                  <div class="input-field">
+                      <label>Expiry Date</label>
+                      <input type="date" name="dl_expired" placeholder="Enter expiry date" required>
+                  </div>
+                  <div class="input-field-file">
+                      <label>Upload Driver's License</label><br>
+                  <input style=" opacity: 10%; border: solid; border-color: black;" type="file" accept="image/*" placeholder="You can drag an image file here" />
+
+              </div>
+              </div>
+          </div> 
+          <div class="details address">
+              <span class="title">Address Account</span>
+
+              <div class="fields">
+                  <div class="input-field1">
+                      <label>Address</label>
+                      <input type="text" name="address" placeholder="Address Account" required>
+                  </div>
+
+                  <div class="input-field">
+                      <label>Complements</label>
+                      <input type="text" name="complements" placeholder="Apartment, Suit, etc." required>
+                  </div>
+
+                  <div class="input-field">
+                      <label>City</label>
+                      <input type="text"  name="city" placeholder="Enter nationality" required>
+                  </div>
+                
+                  <div class="input-field">
+                      <label>State</label>
+                      <input type="text" name="state" placeholder="Enter nationality" required>
+                  </div>
+
+                  <div class="input-field">
+                      <label>Coutry</label>
+                      <input type="text" name="coutry" placeholder="Enter your state" required>
+                  </div>
+
+                  <div class="input-field">
+                      <label>Zip Code</label>
+                      <input type="text" name="zipcode" placeholder="Enter your district" required>
+                   </div>
+                 
+             </div>
+             <div class="button_1">
+               <input type="submit">
+             </div>
+          </div>
+        </form>
+      </div>
+      
+      <div id="search" class="tabcontent">
+        <p>Seach for Customer Account:</p>
+        <form action="/forms/customer_search/apply" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <input type="hidden" name="user_email" value="{{ current_user.email }}"/>
+          <div class="fields">
+            <div class="input-filed_search_select">
+                <select name="search_type" id="search">
+                  <option disabled selected> Search Type</option>
+                      <option value="first_name"> First Name</option>
+                      <option value="last_name"> Last Name</option>
+                      <option value="email"> email</option>
+                      <option value="mobile"> Mobile</option>
+                      <option value="dl_number"> Driver's License</option>
+                  </select>
+            </div>
+            <div class="input-field_search">
+                  <input type="text" name="search" placeholder="Search...">
+            </div>
+                
+                  <input id="input-field_search_button" type="submit" value="Search">
+            </div>
+        </form>
+        
+        {% if search_customer == "": %}
+          <h1> no Search</h1>
+        {% else %}
+        <div class="table">
+          <table>
+            <tr>
+              <th style="width:30%">Firs Name</th>
+              <th style="width:30%">Last Name</th>
+              <th style="width:20%">Mobile</th>
+              <th style="width:30%">email</th>
+              <th style="width:30%">Driver's License</th>
+            </tr>
+            <div class="line">
+            
+              {% for i in range(0, search_customer.__len__()) %}                
+                <tr>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <td> <a href="/forms/account_detail/{{i}}">{{search_customer[i]['first_name'] }}</a></td>
+                    <td> <a href="/forms/account_detail/{{i}}">{{search_customer[i]['last_name'] }}</a></td>
+                    <td> <a href="/forms/account_detail/{{i}}">{{search_customer[i]['mobile'] }}</a></td>
+                    <td> <a href="/forms/account_detail/{{i}}">{{search_customer[i]['email'] }} </a></td>
+                    <td> <a href="/forms/account_detail/{{i}}">{{search_customer[i]['dl_number'] }}</a></td>
+                </tr>
+              {% endfor %}
+            </div>
+          </table>
+        {% endif %}
+        </div>
+
+      </div>
+     </div>
+  
+    <script>
+        //Function to change the Tabs
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+              tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+              tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+        }
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+
+
+      function myFunction() {
+         document.getElementById("demo").innerHTML = location.reload();
+      }
+
+      
+      </script>
+
+  </body>
+</html>
