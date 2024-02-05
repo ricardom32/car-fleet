@@ -81,7 +81,7 @@ def login_account():
 @app.route('/userlogged')
 @login_required
 def user_loged():
-  return render_template('/sidebar.html')
+  return render_template('/form_dashboard.html')
 
 @app.route('/signup/apply',methods=['GET', 'POST'])
 def signupaccount():
