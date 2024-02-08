@@ -109,7 +109,7 @@ def upload_dl():
 def verify():
   email=request.form['email']
   msg=Message('Password Reset Request',sender='carsfleetus@gmail.com',recipients=[email])
-  msg.body=str(otp)
+  msg.body=("This is an automatic menssage to validate your password. Code:" + str(otp))
   mail.send(msg)
   return render_template('reset_password.html',check_reset=2)
 
