@@ -96,15 +96,7 @@ def edit_car():
 
 # Updated Customer account. 
 def db_car_updated(data):
-  #user_id = data['user_id']
-  #first_name=data["first_name"]
-  #user_email = data['user_email']
-  #user_id = tuple(user_id)
-  #print(type(user_id))
-  #print(type(data))
-  #print(data)
-  #print(user_id)
-
   with engine.connect() as conn:
     query = text("UPDATE car_register SET user_email = :user_email, user_id = :user_id, nick_name = :nick_name,  make = :make, model = :model, year = :year, color = :color, vin = :vin, plate =:plate WHERE user_id = :user_id and user_email = :user_email") 
     conn.execute(query,data)
+

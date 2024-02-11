@@ -8,6 +8,14 @@
         "index": 222
       }
     ],
+    "templates/reset_password.html": [
+      {
+        "id": "a7d7c900-7153-43a2-be87-e5262d405ba7",
+        "line": 193,
+        "version": 730,
+        "index": 5399
+      }
+    ],
     "templates/sidebar.html": [
       {
         "id": "6bbd605c-6105-43a7-8ef4-8191db903441",

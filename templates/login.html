@@ -199,7 +199,7 @@
                      {% if check_loging == 3: %}
                       <h5 style="text-align: center; color: green;">{{ msg }}</h5>
                     {% endif %}
-                     {% set check_loging = 0 %}
+                    {% set check_loging = 0 %}
                     <form action="/login/apply" method="post">
                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <div class="field input-field">

@@ -15,15 +15,20 @@ def login_check1(email, password):
   with engine.connect() as conn:
     result = conn.execute(text("SELECT * FROM accounts WHERE email = :email"), dict(email=email))
     user = result.fetchone()
+    print(user)
     if not user:
       return None
+    check_email = user[3]
     user = User(user[0], user[1], user[2])
     passwrod_db = user.password
-    if check_password_hash(passwrod_db, password):
-      return user
-    else:
-        return None
 
+    if check_password_hash(passwrod_db, password) and check_email == "YES":
+      return user
+    elif check_password_hash(passwrod_db, password) and check_email == "NO":
+      return "EMAIL_NOT_VALID"
+    else:
+      return None
+      
 # link the user for longing
 def get_user_by_id(id):
   with engine.connect() as conn:
@@ -40,7 +45,7 @@ def signupuser(data):
   email = data['email']
   password = data['password']
   password = generate_password_hash(password)
-  user_add = {"email": email, "password": password}
+  user_add = {"email": email, "password": password, "valid": 'NO'}
 
   with engine.connect() as conn:
     result = conn.execute(text("SELECT * FROM accounts WHERE email = :email"), dict(email=email))
@@ -49,6 +54,26 @@ def signupuser(data):
     return "USER_EXISTE"
   else:  
     with engine.connect() as conn:
-      query = text("INSERT INTO accounts (email, password) VALUES (:email, :password)")
+      query = text("INSERT INTO accounts (email, password, valid) VALUES (:email, :password, :valid)")
       conn.execute(query, user_add)
     return "SIGNEDUP"
+
+def db_password_updated(data):
+  email = data['email']
+  password = data['new_password']
+  valid = "YES"
+  password = generate_password_hash(password)
+  new_password = {"email": email, "password": password, "valid": valid}
+  with engine.connect() as conn:
+    query = text("UPDATE accounts SET password = :password WHERE email =:email")
+    conn.execute(query,new_password)
+
+#Confirm the user by email verification
+def confirm_email(emailaddress):
+  email = {"email": emailaddress}
+  valid = {"email": emailaddress, "password": 'N/A', "valid": 'YES'}
+  print(email)
+  with engine.connect() as conn:
+    query = text("UPDATE accounts SET valid= :valid WHERE email =:email")
+    conn.execute(query,valid)
+    return "Email_Confirmed"
