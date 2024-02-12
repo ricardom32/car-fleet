@@ -77,3 +77,12 @@ def confirm_email(emailaddress):
     query = text("UPDATE accounts SET valid= :valid WHERE email =:email")
     conn.execute(query,valid)
     return "Email_Confirmed"
+
+# Check if the material exist for reset password
+def check_account(email):
+  with engine.connect() as conn:
+    result = conn.execute(text("SELECT * FROM accounts WHERE email = :email"), dict(email=email))
+  if len(result.all())!=0:
+    return "USER_EXISTE"
+  else:  
+    return "NO_USER"
