@@ -75,7 +75,9 @@ def login_account():
       elif login_check == 'EMAIL_NOT_VALID':
           msg = 'Email is not verified yet, It was sent another email to verify your account!!!'
           msg_email=Message('Cars-Fleet: Email Verification!!!',sender='carsfleetus@gmail.com',recipients=[email])
-          msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n Link:"+"https://68a735de-441b-4c0b-b492-c780ef1d4274-00-o84d4g0hxvkd.spock.repl.co/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
+          #link when we release the version
+          msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://www.cars-fleet.com/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
+          #msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://68a735de-441b-4c0b-b492-c780ef1d4274-00-o84d4g0hxvkd.spock.repl.co/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
           mail.send(msg_email)
           return render_template('/login.html',msg=msg,check_loging=2)
       elif login_check != None:
@@ -100,7 +102,9 @@ def signupaccount():
     #Verify Registraction by email.
     msg="Please verify your email address!!!"
     msg_email=Message('Cars-Fleet: Email Verification!!!',sender='carsfleetus@gmail.com',recipients=[email])
-    msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n Link:"+"https://68a735de-441b-4c0b-b492-c780ef1d4274-00-o84d4g0hxvkd.spock.repl.co/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
+    #link when we release the version
+    msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://www.cars-fleet.com/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
+    #msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://68a735de-441b-4c0b-b492-c780ef1d4274-00-o84d4g0hxvkd.spock.repl.co/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
     mail.send(msg_email)
     return render_template('/login.html',msg=msg,check_loging=3)
 
@@ -121,14 +125,12 @@ def verify():
   account_exist = check_account(email)
   if account_exist == "USER_EXISTE":
     msg=Message('Cars-Fleet: Password Reset!!!',sender='carsfleetus@gmail.com',recipients=[email])
-    msg.body=("Hi Customer, \r\n\r\n This is an automatic menssage to validate your password.\r\n\r\nCode:" + str(otp))
+    msg.body=("Hi Customer, \r\n\r\n This is an automatic menssage to validate your password.\r\n\r\nCode: " + str(otp))
     mail.send(msg)
     return render_template('reset_password.html',check_reset=2,email=email)
   else:
     msg="No user founded, please signup"
     return render_template('/login.html',msg=msg,check_loging=3)
-
-    
 
 @app.route('/validate',methods=['POST'])
 def validate():
