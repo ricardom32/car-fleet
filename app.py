@@ -1,11 +1,8 @@
 from flask import Flask, render_template, request, redirect
 from db_loging import login_check1, signupuser, get_user_by_id, db_password_updated, confirm_email, check_account
-
-# import password liberies
-from flask import*
-from flask_mail import*
-from random import*
-import ssl
+from flask_mail import Mail, Message
+# imports random module to create OPT code.
+from random import randint
 
 #Blueprint library
 from app_car import app_car
@@ -15,6 +12,8 @@ from app_reservation import app_reservation
 from app_employee import app_employee
 from app_expense import app_expense
 from app_dashboard import app_dashboard
+from app_profile import app_profile
+from app_pricetable import app_pricetable
 
 # project the access the database with Token
 from flask_wtf.csrf import CSRFProtect
@@ -31,8 +30,10 @@ app.register_blueprint(app_reservation)
 app.register_blueprint(app_employee)
 app.register_blueprint(app_expense)
 app.register_blueprint(app_dashboard)
+app.register_blueprint(app_profile)
+app.register_blueprint(app_pricetable)
 
-#google SMTP server
+#Google SMTP server
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT']=465
 app.config['MAIL_USERNAME']='carsfleetus@gmail.com'
@@ -40,27 +41,44 @@ app.config['MAIL_PASSWORD']='abla qqag tyku znxr'
 app.config['MAIL_USE_TLS']=False
 app.config['MAIL_USE_SSL']=True
 mail=Mail(app)
+# Random OPT code
 otp=randint(100000,999999)
 
+# CSRFProtect
 csrf = CSRFProtect(app)
 login_manager_app = LoginManager(app)
 app.config['SECRET_KEY'] = 'thisisasecretkeyforcarfleet'
 
-#itentify the user
+#identify the user
 @login_manager_app.user_loader
 def load_user(id):
   return get_user_by_id(id)
 
 @app.route("/")
 def Car_easy_fleet():
-  return render_template('home.html', company_name='Car Fleet')
-
+  return render_template('/home.html', company_name='Cars-Fleet')
 
 # Call login and singup html page
 @app.route('/login.html')
 def login():
   check_loging = 0
   return render_template('/login.html',check_loging=check_loging)
+
+#Open the page with logged user
+@app.route('/userlogged')
+@login_required
+def user_loged():
+  return render_template('/form_dashboard.html')
+
+@app.route('/logout')
+def logout():
+  logout_user()
+  return render_template('/home.html')
+
+# This call the price table
+@app.route('/price_table')
+def upload_dl():
+  return  render_template('/price_table.html') 
 
 #User enter the login and password
 @app.route('/login/apply', methods=['GET', 'POST'])
@@ -76,19 +94,13 @@ def login_account():
           msg = 'Email is not verified yet, It was sent another email to verify your account!!!'
           msg_email=Message('Cars-Fleet: Email Verification!!!',sender='carsfleetus@gmail.com',recipients=[email])
           #link when we release the version
-          msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://www.cars-fleet.com/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
-          #msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://68a735de-441b-4c0b-b492-c780ef1d4274-00-o84d4g0hxvkd.spock.repl.co/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
+          #msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://www.cars-fleet.com/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
+          msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://68a735de-441b-4c0b-b492-c780ef1d4274-00-o84d4g0hxvkd.spock.repl.co/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
           mail.send(msg_email)
           return render_template('/login.html',msg=msg,check_loging=2)
       elif login_check != None:
           login_user(login_check)
           return redirect('/userlogged')
-
-#Open the page with logged user
-@app.route('/userlogged')
-@login_required
-def user_loged():
-  return render_template('/form_dashboard.html')
 
 @app.route('/signup/apply',methods=['GET', 'POST'])
 def signupaccount():
@@ -102,21 +114,14 @@ def signupaccount():
     #Verify Registraction by email.
     msg="Please verify your email address!!!"
     msg_email=Message('Cars-Fleet: Email Verification!!!',sender='carsfleetus@gmail.com',recipients=[email])
-    #link when we release the version
-    msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://www.cars-fleet.com/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
-    #msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://68a735de-441b-4c0b-b492-c780ef1d4274-00-o84d4g0hxvkd.spock.repl.co/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
+    
+    #Release Version
+    #msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://www.cars-fleet.com/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
+
+    #Replit verion
+    msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://68a735de-441b-4c0b-b492-c780ef1d4274-00-o84d4g0hxvkd.spock.repl.co/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
     mail.send(msg_email)
     return render_template('/login.html',msg=msg,check_loging=3)
-
-@app.route('/logout')
-def logout():
-  logout_user()
-  return render_template('/home.html')
-
-# This call the price table
-@app.route('/price_table')
-def upload_dl():
-  return  render_template('/price_table.html') 
 
 # Password Reset
 @app.route('/verify',methods=['POST'])

@@ -267,107 +267,47 @@
     <div class="container">
       <header>Customer Account</header>
       <div class="tab">
-        {% if tab_id == "2": %}
-           <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button>
-           <button class="tablinks" onclick="openCity(event, 'search')"id="defaultOpen">Search </button>
-           <button class="tablinks" onclick="openCity(event, 'account')">Account</button>
-          {% elif tab_id == "3" or tab_id == "4": %}
-           <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button>
-           <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
-           <button class="tablinks" onclick="openCity(event, 'account')"id="defaultOpen">Account</button>
-        {% else %}
-          <button class="tablinks" onclick="openCity(event, 'new_account')" id="defaultOpen">New Account</button>
-          <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
-          <button class="tablinks" onclick="openCity(event, 'account')">Account</button>
-        {% endif %}
+
+         <button class="tablinks" onclick="openCity(event, 'account')"id="defaultOpen">Account</button>
       </div>
 
+
+      
       <div id="account" class="tabcontent">
-          {% if tab_id == "2" or tab_id == "1" : %}
-              <h2> No Customer Account</h2>
-          <!--Detail information -->
-          {% elif tab_id == "3" %}          
+          {% if tab_id == "1" %}          
           <div class="details personal">
               <span class="title">Personal Details</span>
               <div class="fields">
                 <div class="input-field">
                   <label>First Name</label>
-                  {{searched_account['first_name']}}
+                  {{ current_user.first_name }}
                 </div>
                 <div class="input-field">
                   <label>Last Name</label>
-                  {{searched_account['last_name'] }}
+                  {{ current_user.last_name }}
                 </div>
                 <div class="input-field">
                     <label>Date of Birth</label>
-                    {{searched_account['date_birth'] }}
-                </div>
-                <div class="input-field">
-                    <label>Email</label>
-                    {{searched_account['email'] }}
-                </div>
-                <div class="input-field">
-                    <label>Mobile Number</label>
-                    {{searched_account['mobile'] }}
-                </div>    
-               <div class="input-field">
-                    <label>Gender</label>
-                    {{searched_account['gender'] }}
-                </div>
-                <div class="input-field">
-                    <label>Occupation</label>
-                    {{searched_account['occupation'] }}
+                    {{ current_user.date_birth }}
                 </div>
               </div>
             </div>
             <div class="details ID">
-              <span class="title">Driver's License</span>
+              <span class="title">Password</span>
               <div class="fields">
                   <div class="input-field">
-                      <label>ID Number</label>
-                      {{searched_account['dl_number'] }}
-                  </div>
-                  <div class="input-field">
-                      <label>Issued Country</label>
-                      {{searched_account['dl_country'] }}
-                  </div>
-                  <div class="input-field">
-                      <label>Expiry Date</label>
-                      {{searched_account['dl_expired'] }}
-                  </div>
-                  <div class="input-field-file">
-                      <label>Upload Driver's License</label><br>
-                    <img src="/static/photo_id_2.png" alt="Girl in a jacket" width="220" height="110">                      
+                      <label>Password</label>
+                      *************
                   </div>
               </div>
             </div>
             <div class="details address">
-              <span class="title">Address Account</span>
+              <span class="title">Email</span>
               <div class="fields">
                   <div class="input-field1">
-                      <label>Address</label>
-                      {{searched_account['address'] }}
+                      <label>Email Address</label>
+                      {{ current_user.email }}
                   </div>
-                  <div class="input-field">
-                      <label>Complements</label>
-                      {{searched_account['complements'] }}
-                  </div>
-                  <div class="input-field">
-                      <label>City</label>
-                      {{searched_account['city'] }}  
-                  </div>
-                  <div class="input-field">
-                      <label>State</label>
-                      {{searched_account['state'] }}
-                  </div>
-                  <div class="input-field">
-                      <label>Coutry</label>
-                      {{searched_account['coutry'] }}
-                  </div>
-                  <div class="input-field">
-                      <label>Zip Code</label>
-                     {{searched_account['zipcode'] }}
-                   </div>
                 </div>
               <form action="/forms/new_account/edit">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -375,7 +315,6 @@
                      <input type="submit" value="Edit">
                    </div>
               </form>
-
           </div>
         {% elif tab_id == "4" %}          
           <div class="details personal">
