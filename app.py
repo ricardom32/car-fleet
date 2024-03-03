@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect
-from db_loging import login_check1, signupuser, get_user_by_id, db_password_updated, confirm_email, check_account
-from flask_mail import Mail, Message
-# imports random module to create OPT code.
-from random import randint
+from flask import Flask, render_template, session
+from db_loging import get_user_by_id
+#import secrets
+
+from flask_mail import Mail
 
 #Blueprint library
 from app_car import app_car
@@ -14,12 +14,14 @@ from app_expense import app_expense
 from app_dashboard import app_dashboard
 from app_profile import app_profile
 from app_pricetable import app_pricetable
+from app_team import app_team
+from app_loging import app_loging
 
 # project the access the database with Token
 from flask_wtf.csrf import CSRFProtect
 
 # login
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, logout_user, login_required
 
 # import modules Flask and Bluprints
 app = Flask(__name__)
@@ -32,37 +34,34 @@ app.register_blueprint(app_expense)
 app.register_blueprint(app_dashboard)
 app.register_blueprint(app_profile)
 app.register_blueprint(app_pricetable)
+app.register_blueprint(app_team)
+app.register_blueprint(app_loging)
 
 #Google SMTP server
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT']=465
-app.config['MAIL_USERNAME']='carsfleetus@gmail.com'
-app.config['MAIL_PASSWORD']='abla qqag tyku znxr'
-app.config['MAIL_USE_TLS']=False
-app.config['MAIL_USE_SSL']=True
-mail=Mail(app)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'carsfleetus@gmail.com'
+app.config['MAIL_PASSWORD'] = 'abla qqag tyku znxr'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 # Random OPT code
-otp=randint(100000,999999)
+#otp = randint(100000, 999999)
 
 # CSRFProtect
 csrf = CSRFProtect(app)
 login_manager_app = LoginManager(app)
 app.config['SECRET_KEY'] = 'thisisasecretkeyforcarfleet'
 
+@app.route("/")
+def Car_easy_fleet():
+  #print("Ricardo_teste1",load_user.email)
+  return render_template('/home.html', company_name='Cars-Fleet')
+
 #identify the user
 @login_manager_app.user_loader
 def load_user(id):
   return get_user_by_id(id)
-
-@app.route("/")
-def Car_easy_fleet():
-  return render_template('/home.html', company_name='Cars-Fleet')
-
-# Call login and singup html page
-@app.route('/login.html')
-def login():
-  check_loging = 0
-  return render_template('/login.html',check_loging=check_loging)
 
 #Open the page with logged user
 @app.route('/userlogged')
@@ -72,90 +71,11 @@ def user_loged():
 
 @app.route('/logout')
 def logout():
+  # remove the username from the session if it is there
+  session["id"] = None
+  session["email"] = None
   logout_user()
   return render_template('/home.html')
-
-# This call the price table
-@app.route('/price_table')
-def upload_dl():
-  return  render_template('/price_table.html') 
-
-#User enter the login and password
-@app.route('/login/apply', methods=['GET', 'POST'])
-def login_account():
-    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
-      email = request.form['email']
-      password = request.form['password']
-      login_check = login_check1(email,password)
-      if login_check == None:
-          msg = 'Incorrect login credentials !!!'
-          return render_template('/login.html',msg=msg,check_loging=2)
-      elif login_check == 'EMAIL_NOT_VALID':
-          msg = 'Email is not verified yet, It was sent another email to verify your account!!!'
-          msg_email=Message('Cars-Fleet: Email Verification!!!',sender='carsfleetus@gmail.com',recipients=[email])
-          #link when we release the version
-          #msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://www.cars-fleet.com/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
-          msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://68a735de-441b-4c0b-b492-c780ef1d4274-00-o84d4g0hxvkd.spock.repl.co/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
-          mail.send(msg_email)
-          return render_template('/login.html',msg=msg,check_loging=2)
-      elif login_check != None:
-          login_user(login_check)
-          return redirect('/userlogged')
-
-@app.route('/signup/apply',methods=['GET', 'POST'])
-def signupaccount():
-  data = request.form
-  email=data['email']
-  result = signupuser(data)
-  if result == "USER_EXISTE":
-    msg="Email already used"
-    return render_template('/login.html',msg=msg,check_loging=2)
-  else:
-    #Verify Registraction by email.
-    msg="Please verify your email address!!!"
-    msg_email=Message('Cars-Fleet: Email Verification!!!',sender='carsfleetus@gmail.com',recipients=[email])
-    
-    #Release Version
-    #msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://www.cars-fleet.com/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
-
-    #Replit verion
-    msg_email.body=("Hi Customer, \r\n\r\nPlease click in the link below to confirm your email.\r\n\r\n"+"https://68a735de-441b-4c0b-b492-c780ef1d4274-00-o84d4g0hxvkd.spock.repl.co/email_confirmation/"+email+"\r\n\r\nThanks,\r\nCars-Fleet Team")
-    mail.send(msg_email)
-    return render_template('/login.html',msg=msg,check_loging=3)
-
-# Password Reset
-@app.route('/verify',methods=['POST'])
-def verify():
-  email=request.form['email']
-  account_exist = check_account(email)
-  if account_exist == "USER_EXISTE":
-    msg=Message('Cars-Fleet: Password Reset!!!',sender='carsfleetus@gmail.com',recipients=[email])
-    msg.body=("Hi Customer, \r\n\r\n This is an automatic menssage to validate your password.\r\n\r\nCode: " + str(otp))
-    mail.send(msg)
-    return render_template('reset_password.html',check_reset=2,email=email)
-  else:
-    msg="No user founded, please signup"
-    return render_template('/login.html',msg=msg,check_loging=3)
-
-@app.route('/validate',methods=['POST'])
-def validate():
-  data = request.form
-  print(data)
-  user_otp=request.form['OTP_code']
-  if otp==int(user_otp):
-    db_password_updated(data)
-    return "<h2>Password update/h2>"
-  else:
-    return "<h2>Verification failed otp does not match</h2>"
-
-@app.route('/reset_password')
-def passwrod_reset():
-  return render_template('/reset_password.html',check_reset=0)
-
-@app.route('/email_confirmation/<emailaddress>')
-def email_confirmation(emailaddress):
-  confirm_email(emailaddress)
-  return "<h2>Email Verification</h2>"
 
 if __name__ == "__main__":
   csrf.init_app(app)

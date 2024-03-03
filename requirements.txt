@@ -1,4 +1,4 @@
-Flask
+flask
 gunicorn
 sqlalchemy
 pymysql
@@ -8,3 +8,4 @@ flask_sqlalchemy
 flask_wtf
 flask_login
 Flask-Mail
+secrets

@@ -31,7 +31,7 @@ def customer_account():
 def customer_search():
   search_customer = request.form
   if len(search_customer) <= 3 or search_customer['search'] == "" :
-    return render_template('/customer_form.html',search_customer="",tab_id="2")
+    return render_template('/form_customer.html',search_customer="",tab_id="2")
   else:
     result_search = db_customer_search(search_customer)
     if db_customer_search(search_customer) == None:

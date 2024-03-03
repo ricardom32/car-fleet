@@ -265,10 +265,10 @@
   <body>
     {% include 'sidebar.html' %}
     <div class="container">
-      <header>Customer Account</header>
+      <header>Profile</header>
       <div class="tab">
 
-         <button class="tablinks" onclick="openCity(event, 'account')"id="defaultOpen">Account</button>
+         <button class="tablinks" onclick="openCity(event, 'account')"id="defaultOpen">{{ current_user.first_name }}</button>
       </div>
 
 

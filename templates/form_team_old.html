@@ -10,7 +10,7 @@
       <!----===== Iconscout CSS ===== -->
       <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-      <title>Registraction Form</title> 
+      <title>Team - Registraction Form</title> 
   </head>
   <style>
     /* ===== Google Font Import - Poppins ===== */
@@ -260,36 +260,23 @@
       color: black;
       text-decoration-line: none;
     }
-
-    /*------------------ Zoom License's drive ----------------- */
-    .zoom {
-      transition: transform .5s; /* Animation */
-      width: 200px;
-      height: 100px;
-      margin: 0 auto;
-    }
-
-    .zoom:hover {
-      transform: scale(2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-    }
-   
   </style>
 
   <body>
     {% include 'sidebar.html' %}
     <div class="container">
-      <header>Customer Account</header>
+      <header> New Team Account</header>
       <div class="tab">
         {% if tab_id == "2": %}
-          <!-- <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button> -->
+           <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button>
            <button class="tablinks" onclick="openCity(event, 'search')"id="defaultOpen">Search </button>
            <button class="tablinks" onclick="openCity(event, 'account')">Account</button>
           {% elif tab_id == "3" or tab_id == "4": %}
-          <!-- <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button> -->
+           <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button>
            <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
            <button class="tablinks" onclick="openCity(event, 'account')"id="defaultOpen">Account</button>
         {% else %}
-         <!-- <button class="tablinks" onclick="openCity(event, 'new_account')" id="defaultOpen">New Account</button> -->
+          <button class="tablinks" onclick="openCity(event, 'new_account')" id="defaultOpen">New Account</button>
           <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
           <button class="tablinks" onclick="openCity(event, 'account')">Account</button>
         {% endif %}
@@ -348,12 +335,10 @@
                       <label>Expiry Date</label>
                       {{searched_account['dl_expired'] }}
                   </div>
-
-                    <div class="input-field-file">
-                        <label>Upload Driver's License</label><br> 
-                         <img class="zoom" src="/static/photo_id_2.png" alt="No ID card was uploaded" width="220" height="110"></a>
-                    </div>
-
+                  <div class="input-field-file">
+                      <label>Upload Driver's License</label><br> 
+                       <img src="/static/photo_id_2.png" alt="No ID card was uploaded" width="220" height="110"></a>
+                  </div>
               </div>
             </div>
             <div class="details address">
@@ -384,14 +369,12 @@
                      {{searched_account['zipcode'] }}
                    </div>
                 </div>
-              {% if current_user.email == "ricardom32@hotmail.com" %}
               <form action="/forms/new_account/edit">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                   <div class="button_1">
                      <input type="submit" value="Edit">
                    </div>
               </form>
-              {% endif %}
 
           </div>
         {% elif tab_id == "4" %}          
@@ -490,81 +473,59 @@
          {% endif %}
       </div>
 
-      <!-- Register New Customer -->
+      <!-- Register New Member of Team -->
       <div id="new_account" class="tabcontent">
-        <form action="/forms/new_account/apply" method="post" action="/upload" enctype="multipart/form-data">
+        <form action="/forms/new_team/apply" method="post" action="/upload" enctype="multipart/form-data">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
           <input type="hidden" name="user_email" value="{{ current_user.email }}"/>
           <input type="hidden" name="user_id" value="0"/>
           <div class="details personal">
-            <span class="title">Personal Details</span>
+            <span class="title">Team User Account</span>
 
             <div class="fields">
                 <div class="input-field">
-                    <label>First Name</label>
-                    <input type="text" name="first_name" placeholder="Enter your name" required>
-                </div>
-
-                <div class="input-field">
-                  <label>Last Name</label>
-                  <input type="text" name="last_name" placeholder="Enter your name" required>
-                </div>
-
-                <div class="input-field">
-                    <label>Date of Birth</label>
-                    <input type="date" name="date_birth" placeholder="Enter birth date" required>
-                </div>
-
-                <div class="input-field">
                     <label>Email</label>
-                    <input type="text" name="email" placeholder="Enter your email" required>
+                    <input type="email" name="email" placeholder="Enter your email" required>
                 </div>
 
-                <div class="input-field">
-                    <label>Mobile Number</label>
-                    <input type='int' name="mobile" placeholder="Enter mobile number" required>
-                </div>
-
-                <div class="input-field">
-                    <label>Gender</label>
-                    <select name="gender">
-                        <option disabled selected>Select gender</option>
-                        <option value="Male"> Male</option>
-                        <option value="Female"> Female</option>
-                        <option value="Others"> Others</option>
-                    </select>
-                   <input type="hidden">
-                </div>
-
-                <div class="input-field">
-                    <label>Occupation</label>
-                    <input type="text" name="occupation" placeholder="Enter your ccupation" required>
-                </div>
             </div>
           </div>
           <div class="details ID">
-              <span class="title">Driver's License</span>
+              <span class="title">Person Information</span>
 
               <div class="fields">
-                  <div class="input-field">
-                      <label>ID Number</label>
-                      <input type="text" name="dl_number" placeholder="Enter ID type" required>
-                  </div>
-
-                  <div class="input-field">
-                      <label>Issued Country</label>
-                      <input type="text" name="dl_country" placeholder="Enter issued authority" required>
-                  </div>
-
-                  <div class="input-field">
-                      <label>Expiry Date</label>
-                      <input type="date" name="dl_expired" placeholder="Enter expiry date" required>
-                  </div>
-                  <div class="input-field-file">
-                      <label>Upload Driver's License</label><br>
-                      <input style=" opacity: 60%; border: solid; border-color: black;" type="file" name="photo" accept="image/*" placeholder="You can drag an image file here" />
-                  </div>
+              <div class="input-field">
+                  <label>First Name</label>
+                  <input type="text" name="first_name" placeholder="Enter your name" required>
               </div>
+
+              <div class="input-field">
+                <label>Last Name</label>
+                <input type="text" name="last_name" placeholder="Enter your name" required>
+              </div>
+
+              <div class="input-field">
+                  <label>Date of Birth</label>
+                  <input type="date" name="date_birth" placeholder="Enter birth date" required>
+              </div>
+
+              <div class="input-field">
+                  <label>Mobile Number</label>
+                  <input type='int' name="mobile" placeholder="Enter mobile number" required>
+              </div>
+
+              <div class="input-field">
+                  <label>Gender</label>
+                  <select name="gender">
+                      <option disabled selected>Select gender</option>
+                      <option value="Male"> Male</option>
+                      <option value="Female"> Female</option>
+                      <option value="Others"> Others</option>
+                  </select>
+                 <input type="hidden">
+              </div>
+
+            </div>
           </div> 
           <div class="details address">
               <span class="title">Address Account</span>

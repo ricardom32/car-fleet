@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, text
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import session
 
 # Class for itentify user
 from User import User
@@ -10,15 +11,17 @@ my_secret = os.environ['DB_CARFLEET']
 engine =create_engine(my_secret,connect_args={"ssl": {"ssl_ca": "/etc/ssl/cert.pem"}})
 
 # Check the Login
-def login_check1(email, password):
+def check_login(email, password):
   with engine.connect() as conn:
     result = conn.execute(text("SELECT * FROM accounts_admin WHERE email = :email"), dict(email=email))
     user = result.fetchone()
-    print(user)
     if not user:
       return None
-    check_email = user[16]
-    user = User(user[0], user[1], user[2], user[3], user[4], user[5], user[6], user[7])
+    # Check the email is validated, by checking the link in the email.
+    check_email = user[15]
+    # load the user information to user 
+    user = User(user[0], user[1], user[2], user[3], user[4], user[5], user[6])
+    #user = User(user[0], user[1], user[2], user[3], user[4], user[5], user[16],user[17],user[18],user[19],user[20],user[21],user[22],user[23],user[16], )
     passwrod_db = user.password
 
     if check_password_hash(passwrod_db, password) and check_email == "YES":
@@ -34,7 +37,10 @@ def get_user_by_id(id):
     result = conn.execute(text("SELECT * FROM accounts_admin WHERE id = :id"), dict(id=id))
     row = result.fetchone()  
     if row != None:
-      logged_user = User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+      logged_user = User(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+      #Arquive the user in session
+      session["id"] = logged_user.id
+      session["email"] = logged_user.email
       return logged_user
     else:
       return None
@@ -53,7 +59,7 @@ def signupuser(data):
     return "USER_EXISTE"
   else:  
     with engine.connect() as conn:
-      query = text("INSERT INTO accounts_admin (email_admin, password_admin, email, password, valid) VALUES (:email_admin, :password_admin, :email, :password, :valid)")
+      query = text("INSERT INTO accounts_admin (email_admin, email, password, valid) VALUES (:email_admin, :email, :password, :valid)")
       conn.execute(query, user_add)
     return "SIGNEDUP"
 
@@ -62,9 +68,9 @@ def db_password_updated(data):
   password = data['new_password']
   valid = "YES"
   password = generate_password_hash(password)
-  new_password = {"email_admin":email, "password_admin": password, "email": email, "password": password, "valid": valid}
+  new_password = {"email_admin":email, "email": email, "password": password, "valid": valid}
   with engine.connect() as conn:
-    query = text("UPDATE accounts_admin SET password_admin = :password ,password = :password WHERE email =:email")
+    query = text("UPDATE accounts_admin SET password = :password WHERE email =:email")
     conn.execute(query,new_password)
 
 #Confirm the user by email verification
