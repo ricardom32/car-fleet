@@ -8,5 +8,11 @@ flask_sqlalchemy
 flask_wtf
 flask_login
 Flask-Mail
-secrets
 random
+
+
+
+
+
+
+
