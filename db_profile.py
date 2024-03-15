@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine, text
 import os
 
-#my_secret = os.environ['DB_CARFLEET']
-my_secret = os.environ['DB_CARS-FLEET_AIVEN']
+my_secret = os.environ['DB_CARFLEET']
+#my_secret = os.environ['DB_CARS-FLEET_AIVEN']
 engine =create_engine(my_secret,connect_args={"ssl": {"ssl_ca": "/etc/ssl/cert.pem"}}, isolation_level="AUTOCOMMIT")
 
 
