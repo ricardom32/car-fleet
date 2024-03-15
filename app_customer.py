@@ -24,7 +24,8 @@ def customer_account():
     binaryData = file.read()
   data['photo'] = binaryData
   db_new_account(data) 
-  return 'New Register updated'
+  return render_template('/popup_message.html')
+  #return 'New Register updated'
 
 @app_customer.route('/forms/customer_search/apply',methods=['GET', 'POST'])
 @login_required

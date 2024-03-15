@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine, text
 import os
 
-my_secret = os.environ['DB_CARFLEET']
-
-engine =create_engine(my_secret,connect_args={"ssl": {"ssl_ca": "/etc/ssl/cert.pem"}})
+#my_secret = os.environ['DB_CARFLEET']
+my_secret = os.environ['DB_CARS-FLEET_AIVEN']
+engine =create_engine(my_secret,connect_args={"ssl": {"ssl_ca": "/etc/ssl/cert.pem"}}, isolation_level="AUTOCOMMIT")
 
 # New customer account. 
 def db_new_account(data):
@@ -11,6 +11,7 @@ def db_new_account(data):
   with engine.connect() as conn:
    query = text("INSERT INTO customer_account_1 (user_email, user_id, first_name, last_name, date_birth, email, mobile, gender, occupation, dl_number, dl_country, dl_expired, address, complements, city, state,coutry, zipcode, photo) VALUES (:user_email, :user_id, :first_name, :last_name, :date_birth, :email, :mobile, :gender, :occupation, :dl_number, :dl_country, :dl_expired, :address, :complements, :city, :state, :coutry, :zipcode, :photo)")
    conn.execute(query, data)
+   #conn.commit() 
   
   with engine.connect() as conn:
     result = conn.execute(text("SELECT last_insert_id() from customer_account_1"))
@@ -25,6 +26,7 @@ def db_new_account(data):
   with engine.connect() as conn:
    query = text("UPDATE customer_account_1 SET user_id = :user_id WHERE id =:id")
    conn.execute(query,last_id)
+   #conn.commit() 
 
 # New customer account.
 def db_customer_search(data):

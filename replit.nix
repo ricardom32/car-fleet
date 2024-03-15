@@ -1,5 +1,11 @@
 { pkgs }: {
   deps = [
+    pkgs.rustc
+    pkgs.pkg-config
+    pkgs.openssl
+    pkgs.libxcrypt
+    pkgs.libiconv
+    pkgs.cargo
     pkgs.mailutils
     pkgs.imagemagick6_light
     pkgs.python310Full

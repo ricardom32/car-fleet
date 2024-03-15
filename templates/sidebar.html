@@ -87,7 +87,7 @@ nav.open .sidebar {
   /*margin: 8px 0; */
   /*padding: 14px 12px; */
   margin: 1px 0; 
-  padding: 10px 12px; 
+  padding: 8px 12px; 
   border-radius: 8px;
   text-decoration: none;
 }
@@ -174,7 +174,7 @@ nav.open ~ .overlay {
                 <span class="link">Car</span>
               </a>
             </li>
-            {% if current_user.email == "ricardom32@hotmail.com" %}
+            {% if current_user.team_main == "YES" %}
             <li class="list">
               <a href="/forms/team" class="nav-link">
                 <i class="bx bx-group icon"></i>
@@ -192,6 +192,18 @@ nav.open ~ .overlay {
               <a href="/forms/expense" class="nav-link">
                 <i class="bx bx-bar-chart-alt-2 icon"></i>
                 <span class="link">Expenses</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="/forms/expense" class="nav-link">
+                <i class="bx bx-bar-chart-alt-2 icon"></i>
+                <span class="link">Branches</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="/forms/expense" class="nav-link">
+                <i class="bx bx-bar-chart-alt-2 icon"></i>
+                <span class="link">Contracts</span>
               </a>
             </li>
           </ul>

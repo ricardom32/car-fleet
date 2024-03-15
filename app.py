@@ -41,7 +41,7 @@ app.register_blueprint(app_loging)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'carsfleetus@gmail.com'
-app.config['MAIL_PASSWORD'] = 'abla qqag tyku znxr'
+app.config['MAIL_PASSWORD'] = 'xdox gbfl pxph amue'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
@@ -53,15 +53,15 @@ csrf = CSRFProtect(app)
 login_manager_app = LoginManager(app)
 app.config['SECRET_KEY'] = 'thisisasecretkeyforcarfleet'
 
-@app.route("/")
-def Car_easy_fleet():
-  #print("Ricardo_teste1",load_user.email)
-  return render_template('/home.html', company_name='Cars-Fleet')
-
 #identify the user
 @login_manager_app.user_loader
 def load_user(id):
   return get_user_by_id(id)
+
+@app.route("/")
+def Car_easy_fleet():
+  #print("Ricardo_teste1",load_user.email)
+  return render_template('/home.html', company_name='Cars-Fleet')
 
 #Open the page with logged user
 @app.route('/userlogged')

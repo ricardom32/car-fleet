@@ -1,22 +1,22 @@
 from flask import Blueprint
 from flask import render_template, request, session
 from flask_login import login_required
-from db_team import db_new_team, db_customer_search ,detail_account, edit_user, db_customer_updated
+from db_branches import db_new_team, db_customer_search ,detail_account, edit_user, db_customer_updated
 
 from flask import current_app
 from flask_mail import Mail, Message
 import secrets
 
 #Defining a Blueprint
-app_team = Blueprint('app_team',__name__)
+app_branches = Blueprint('app_branches',__name__)
 
 # Customer Information
-@app_team.route('/forms/team')
+@app_branches.route('/forms/team')
 @login_required
 def new_team():
-  return render_template('/form_team.html',tab_id="1")
+  return render_template('/form_branches.html',tab_id="1")
 
-@app_team.route('/forms/new_team/apply',methods=['GET', 'POST'])
+@app_branches.route('/forms/new_team/apply',methods=['GET', 'POST'])
 @login_required
 def team_account():
   data = request.form.to_dict()
@@ -57,7 +57,7 @@ def customer_search():
       search_customer=result_search
       return render_template('/form_customer.html',search_customer=search_customer,tab_id="2")
 
-@app_team.route('/forms/account_detail/<id>')
+@app_branches.route('/forms/account_detail/<id>')
 @login_required
 def account_detail(id):
   searched_account=detail_account(id)
@@ -66,13 +66,13 @@ def account_detail(id):
     file.write(binary_data)
   return render_template('/form_customer.html',searched_account=searched_account,tab_id="3")
 
-@app_team.route('/forms/new_account/edit')
+@app_branches.route('/forms/new_account/edit')
 @login_required
 def account_edit():
   user_edit=edit_user()
   return render_template('/form_customer.html',user_edit=user_edit,tab_id="4")
 
-@app_team.route('/forms/new_account/updated',methods=['GET', 'POST'])
+@app_branches.route('/forms/new_account/updated',methods=['GET', 'POST'])
 @login_required
 def customer_updated():
   #data = request.form

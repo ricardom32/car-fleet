@@ -281,15 +281,15 @@
       <header>Customer Account</header>
       <div class="tab">
         {% if tab_id == "2": %}
-          <!-- <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button> -->
+          <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button>
            <button class="tablinks" onclick="openCity(event, 'search')"id="defaultOpen">Search </button>
            <button class="tablinks" onclick="openCity(event, 'account')">Account</button>
           {% elif tab_id == "3" or tab_id == "4": %}
-          <!-- <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button> -->
+          <button class="tablinks" onclick="openCity(event, 'new_account')" >New Account</button>
            <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
            <button class="tablinks" onclick="openCity(event, 'account')"id="defaultOpen">Account</button>
         {% else %}
-         <!-- <button class="tablinks" onclick="openCity(event, 'new_account')" id="defaultOpen">New Account</button> -->
+         <<button class="tablinks" onclick="openCity(event, 'new_account')" id="defaultOpen">New Account</button>
           <button class="tablinks" onclick="openCity(event, 'search')">Search </button>
           <button class="tablinks" onclick="openCity(event, 'account')">Account</button>
         {% endif %}
@@ -626,6 +626,7 @@
             </div>
             <div class="input-field_search">
                   <input type="text" name="search" placeholder="Search...">
+                  <input type="text" id="myInput" onkeyup="searchFuncion(0)" placeholder="Search for names.." title="Type in a name">
             </div>
 
                   <input id="input-field_search_button" type="submit" value="Search">
@@ -636,7 +637,7 @@
           <h1> no Search</h1>
         {% else %}
         <div class="table">
-          <table>
+          <table id="myTable">
             <tr>
               <th style="width:30%">Firs Name</th>
               <th style="width:30%">Last Name</th>
@@ -645,7 +646,6 @@
               <th style="width:30%">Driver's License</th>
             </tr>
             <div class="line">
-
               {% for i in range(0, search_customer.__len__()) %}                
                 <tr>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -688,7 +688,26 @@
          document.getElementById("demo").innerHTML = location.reload();
       }
 
-
+      // Automatic search under deployment
+      function searchFuncion(x) {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[x];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }       
+        }
+      }
+      
       </script>
 
   </body>
